@@ -16,11 +16,15 @@
             'sans': ['Inter', 'system-ui', 'sans-serif'],
           },
           colors: {
-            'soft-green': '#e8f0e8',
-            'soft-blue': '#e8eef5',
-            'accent-green': '#6b8c6b',
-            'accent-blue': '#6f8fae',
-            'dark-bg': '#0a0a0a',
+            'soft-earth': '#f5f0e8',
+            'warm-beige': '#e8e0d4',
+            'earth-brown': '#8b7355',
+            'taupe': '#a28b6f',
+            'sage': '#9aa87d',
+            'dark-earth': '#2c241a',
+            'accent-warm': '#b8926c',
+            'accent-soft': '#cbb58b',
+            'dark-bg': '#1a1612',
             'shopee-orange': '#ee4d2d',
             'tiktok-black': '#010101',
           },
@@ -66,8 +70,8 @@
               '100%': { backgroundPosition: '1000px 0' },
             },
             glow: {
-              '0%, 100%': { boxShadow: '0 0 5px rgba(107,140,107,0.2)' },
-              '50%': { boxShadow: '0 0 20px rgba(107,140,107,0.5)' },
+              '0%, 100%': { boxShadow: '0 0 5px rgba(139,115,85,0.2)' },
+              '50%': { boxShadow: '0 0 20px rgba(139,115,85,0.5)' },
             },
           }
         }
@@ -91,11 +95,11 @@
       left: 0;
       width: 0;
       height: 2px;
-      background-color: #6b8c6b;
+      background-color: #b8926c;
       transition: width 0.3s ease;
     }
     .dark .nav-link::after {
-      background-color: #8fbc8f;
+      background-color: #cbb58b;
     }
     .nav-link:hover::after,
     .nav-link.active::after {
@@ -114,7 +118,7 @@
     .floating-particle {
       position: absolute;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(107,140,107,0.1) 0%, rgba(107,140,107,0) 70%);
+      background: radial-gradient(circle, rgba(139,115,85,0.1) 0%, rgba(139,115,85,0) 70%);
       animation: floatParticle 15s infinite ease-in-out;
     }
     @keyframes floatParticle {
@@ -155,12 +159,12 @@
       width: 12px;
       height: 12px;
       border-radius: 50%;
-      background-color: #6b8c6b;
+      background-color: #b8926c;
       transition: transform 0.3s ease;
     }
     .timeline-item:hover::before {
       transform: scale(1.5);
-      box-shadow: 0 0 0 4px rgba(107,140,107,0.3);
+      box-shadow: 0 0 0 4px rgba(184,146,108,0.3);
     }
     .timeline-item::after {
       content: '';
@@ -169,7 +173,7 @@
       top: 1.5rem;
       bottom: -1rem;
       width: 2px;
-      background: linear-gradient(to bottom, #6b8c6b, transparent);
+      background: linear-gradient(to bottom, #b8926c, transparent);
     }
     .timeline-item:last-child::after {
       display: none;
@@ -189,10 +193,16 @@
 
   <!-- Navigation Bar -->
   <nav class="sticky top-0 z-50 bg-white/95 dark:bg-dark-bg/95 backdrop-blur-md border-b border-gray-100 dark:border-gray-800 relative">
-    <div class="max-w-7xl mx-auto px-5 sm:px-8 py-4 flex items-center justify-between">
-      <a href="index.html" class="text-2xl font-bold tracking-tight hover:scale-105 transition-transform">
-        <span class="text-gray-900 dark:text-white">WLS</span>
-        <span class="text-accent-green dark:text-accent-green"> Fashion</span>
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 py-3 flex items-center justify-between">
+      <!-- LOGO DENGAN FILE PNG -->
+      <a href="index.html" class="flex items-center gap-3 hover:scale-105 transition-transform">
+        <div class="w-10 h-10 md:w-12 md:h-12 overflow-hidden rounded-full">
+          <img src="assets/logo_wls_dark.png" alt="WLS Fashion Logo" class="w-full h-full object-cover">
+        </div>
+        <div>
+          <span class="text-lg md:text-xl font-bold tracking-tight text-gray-900 dark:text-white">WLS Fashion</span>
+          <p class="text-[10px] md:text-xs text-earth-brown dark:text-accent-warm tracking-wide">Comfortable & Grounded</p>
+        </div>
       </a>
       <div class="hidden md:flex items-center space-x-8">
         <a href="index.html" class="nav-link text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">Beranda</a>
@@ -229,7 +239,7 @@
   <!-- Hero About - dengan animasi -->
   <section class="py-16 md:py-28 relative overflow-hidden">
     <div class="max-w-7xl mx-auto px-5 sm:px-8 text-center">
-      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-soft-green dark:bg-gray-800 text-accent-green text-sm font-medium mb-6 animate-pulse-slow">
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-warm-beige dark:bg-gray-800 text-earth-brown dark:text-accent-warm text-sm font-medium mb-6 animate-pulse-slow">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
@@ -238,7 +248,7 @@
       <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 animate-[slideUp_0.5s_ease-out]">
         <span class="text-gray-900 dark:text-white">Cerita di Balik</span>
         <br>
-        <span class="text-accent-green">WLS Fashion</span>
+        <span class="text-earth-brown dark:text-accent-warm">WLS Fashion</span>
       </h1>
       <p class="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-base md:text-lg animate-[fadeIn_0.6s_ease-out]">Menginspirasi kecantikan muslimah dengan busana syar'i yang elegan dan modern</p>
     </div>
@@ -249,13 +259,13 @@
     <div class="grid md:grid-cols-2 gap-12 items-center">
       <div class="order-2 md:order-1 animate-[slideRight_0.6s_ease-out]">
         <div class="inline-flex items-center gap-2 mb-4">
-          <svg class="w-5 h-5 text-accent-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-5 h-5 text-earth-brown dark:text-accent-warm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" />
           </svg>
-          <span class="text-sm font-medium text-accent-green uppercase tracking-wider">Our Story</span>
+          <span class="text-sm font-medium text-earth-brown dark:text-accent-warm uppercase tracking-wider">Our Story</span>
         </div>
         <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 text-gray-900 dark:text-white">Perjalanan WLS Fashion</h2>
-        <div class="w-16 h-1 bg-accent-green mb-6"></div>
+        <div class="w-16 h-1 bg-earth-brown dark:bg-accent-warm mb-6"></div>
         <p class="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
           Didirikan pada tahun 2020, WLS Fashion hadir sebagai jawaban atas kebutuhan busana muslimah yang tidak hanya syar'i, 
           tetapi juga modis dan nyaman. Kami percaya bahwa setiap muslimah berhak tampil anggun tanpa mengorbankan nilai-nilai syariat.
@@ -270,25 +280,25 @@
         </p>
         <div class="mt-8 flex gap-4">
           <div class="text-center">
-            <div class="text-2xl md:text-3xl font-bold text-accent-green">5+</div>
+            <div class="text-2xl md:text-3xl font-bold text-earth-brown dark:text-accent-warm">5+</div>
             <div class="text-xs md:text-sm text-gray-500">Tahun Pengalaman</div>
           </div>
           <div class="text-center">
-            <div class="text-2xl md:text-3xl font-bold text-accent-green">10K+</div>
+            <div class="text-2xl md:text-3xl font-bold text-earth-brown dark:text-accent-warm">10K+</div>
             <div class="text-xs md:text-sm text-gray-500">Pelanggan Puas</div>
           </div>
           <div class="text-center">
-            <div class="text-2xl md:text-3xl font-bold text-accent-green">50+</div>
+            <div class="text-2xl md:text-3xl font-bold text-earth-brown dark:text-accent-warm">50+</div>
             <div class="text-xs md:text-sm text-gray-500">Koleksi Eksklusif</div>
           </div>
         </div>
       </div>
       <div class="order-1 md:order-2 relative animate-[fadeIn_0.6s_ease-out]">
-        <div class="absolute inset-0 bg-gradient-to-r from-accent-green to-accent-blue rounded-2xl blur-2xl opacity-20 animate-pulse-slow"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-earth-brown to-sage rounded-2xl blur-2xl opacity-20 animate-pulse-slow"></div>
         <div class="relative rounded-2xl overflow-hidden shadow-xl shine-effect">
-          <img src="https://placehold.co/600x500/e8f0e8/4a674a?text=WLS+Story" alt="WLS Fashion Story" class="w-full object-cover">
+          <img src="https://placehold.co/600x500/f5f0e8/b8926c?text=WLS+Story" alt="WLS Fashion Story" class="w-full object-cover">
         </div>
-        <div class="absolute -bottom-4 -right-4 w-24 h-24 bg-accent-green/20 rounded-full blur-xl animate-float"></div>
+        <div class="absolute -bottom-4 -right-4 w-24 h-24 bg-earth-brown/20 rounded-full blur-xl animate-float"></div>
       </div>
     </div>
   </section>
@@ -297,7 +307,7 @@
   <section class="py-12 md:py-20 px-5 sm:px-8 max-w-7xl mx-auto bg-gray-50 dark:bg-gray-900/30">
     <div class="text-center mb-12">
       <div class="inline-flex items-center justify-center gap-2 mb-4">
-        <svg class="w-6 h-6 md:w-7 md:h-7 text-accent-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="w-6 h-6 md:w-7 md:h-7 text-earth-brown dark:text-accent-warm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
         <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">Perjalanan Kami</h2>
@@ -307,8 +317,8 @@
     <div class="grid md:grid-cols-3 gap-8">
       <div class="timeline-item animate-[slideUp_0.5s_ease-out]" style="animation-delay: 0.1s">
         <div class="bg-white dark:bg-gray-900 rounded-xl p-6 border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-md transition-all hover:scale-105">
-          <div class="w-12 h-12 rounded-full bg-soft-green dark:bg-gray-800 flex items-center justify-center mb-4">
-            <span class="text-accent-green font-bold text-xl">2020</span>
+          <div class="w-12 h-12 rounded-full bg-warm-beige dark:bg-gray-800 flex items-center justify-center mb-4">
+            <span class="text-earth-brown dark:text-accent-warm font-bold text-xl">2020</span>
           </div>
           <h3 class="font-bold text-lg mb-2">Awal Berdiri</h3>
           <p class="text-gray-600 dark:text-gray-400 text-sm">WLS Fashion resmi berdiri dengan misi menghadirkan busana muslimah berkualitas</p>
@@ -316,8 +326,8 @@
       </div>
       <div class="timeline-item animate-[slideUp_0.5s_ease-out]" style="animation-delay: 0.3s">
         <div class="bg-white dark:bg-gray-900 rounded-xl p-6 border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-md transition-all hover:scale-105">
-          <div class="w-12 h-12 rounded-full bg-soft-blue dark:bg-gray-800 flex items-center justify-center mb-4">
-            <span class="text-accent-blue font-bold text-xl">2022</span>
+          <div class="w-12 h-12 rounded-full bg-warm-beige dark:bg-gray-800 flex items-center justify-center mb-4">
+            <span class="text-earth-brown dark:text-accent-warm font-bold text-xl">2022</span>
           </div>
           <h3 class="font-bold text-lg mb-2">Ekspansi Digital</h3>
           <p class="text-gray-600 dark:text-gray-400 text-sm">Hadir di platform e-commerce dan media sosial, menjangkau lebih banyak pelanggan</p>
@@ -325,8 +335,8 @@
       </div>
       <div class="timeline-item animate-[slideUp_0.5s_ease-out]" style="animation-delay: 0.5s">
         <div class="bg-white dark:bg-gray-900 rounded-xl p-6 border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-md transition-all hover:scale-105">
-          <div class="w-12 h-12 rounded-full bg-soft-green dark:bg-gray-800 flex items-center justify-center mb-4">
-            <span class="text-accent-green font-bold text-xl">2025</span>
+          <div class="w-12 h-12 rounded-full bg-warm-beige dark:bg-gray-800 flex items-center justify-center mb-4">
+            <span class="text-earth-brown dark:text-accent-warm font-bold text-xl">2025</span>
           </div>
           <h3 class="font-bold text-lg mb-2">10K+ Pelanggan</h3>
           <p class="text-gray-600 dark:text-gray-400 text-sm">Dipercaya oleh lebih dari 10.000 muslimah di seluruh Indonesia</p>
@@ -339,7 +349,7 @@
   <section class="py-12 md:py-20 px-5 sm:px-8 max-w-7xl mx-auto">
     <div class="text-center mb-12">
       <div class="inline-flex items-center justify-center gap-2 mb-4">
-        <svg class="w-6 h-6 md:w-7 md:h-7 text-accent-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="w-6 h-6 md:w-7 md:h-7 text-earth-brown dark:text-accent-warm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
         </svg>
         <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">Visi & Misi</h2>
@@ -348,8 +358,8 @@
     </div>
     <div class="grid md:grid-cols-2 gap-8">
       <div class="bg-white dark:bg-gray-900 p-6 md:p-8 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-md transition-all animate-[slideRight_0.6s_ease-out] group">
-        <div class="w-14 h-14 rounded-full bg-soft-green dark:bg-gray-800 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
-          <svg class="w-7 h-7 text-accent-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="w-14 h-14 rounded-full bg-warm-beige dark:bg-gray-800 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+          <svg class="w-7 h-7 text-earth-brown dark:text-accent-warm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
           </svg>
@@ -361,27 +371,27 @@
         </p>
       </div>
       <div class="bg-white dark:bg-gray-900 p-6 md:p-8 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-md transition-all animate-[slideUp_0.6s_ease-out] group">
-        <div class="w-14 h-14 rounded-full bg-soft-blue dark:bg-gray-800 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
-          <svg class="w-7 h-7 text-accent-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="w-14 h-14 rounded-full bg-warm-beige dark:bg-gray-800 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+          <svg class="w-7 h-7 text-earth-brown dark:text-accent-warm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
           </svg>
         </div>
         <h3 class="text-2xl font-bold mb-3 text-gray-900 dark:text-white">Misi</h3>
         <ul class="space-y-2 text-gray-600 dark:text-gray-300">
           <li class="flex items-start gap-2">
-            <svg class="w-5 h-5 text-accent-green mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+            <svg class="w-5 h-5 text-earth-brown dark:text-accent-warm mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
             Menyediakan busana syar'i berkualitas dengan bahan premium
           </li>
           <li class="flex items-start gap-2">
-            <svg class="w-5 h-5 text-accent-green mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+            <svg class="w-5 h-5 text-earth-brown dark:text-accent-warm mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
             Terus berinovasi dalam desain yang modern dan elegan
           </li>
           <li class="flex items-start gap-2">
-            <svg class="w-5 h-5 text-accent-green mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+            <svg class="w-5 h-5 text-earth-brown dark:text-accent-warm mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
             Memberikan pelayanan terbaik dan pengalaman berbelanja yang menyenangkan
           </li>
           <li class="flex items-start gap-2">
-            <svg class="w-5 h-5 text-accent-green mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+            <svg class="w-5 h-5 text-earth-brown dark:text-accent-warm mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
             Memberdayakan perempuan melalui fashion yang memberdayakan
           </li>
         </ul>
@@ -393,7 +403,7 @@
   <section class="py-12 md:py-20 px-5 sm:px-8 max-w-7xl mx-auto bg-gray-50 dark:bg-gray-900/30">
     <div class="text-center mb-12">
       <div class="inline-flex items-center justify-center gap-2 mb-4">
-        <svg class="w-6 h-6 md:w-7 md:h-7 text-accent-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="w-6 h-6 md:w-7 md:h-7 text-earth-brown dark:text-accent-warm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
         </svg>
         <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">Nilai Kami</h2>
@@ -402,8 +412,8 @@
     </div>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       <div class="text-center p-6 md:p-8 bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-md transition-all hover:scale-105 animate-[slideUp_0.5s_ease-out]" style="animation-delay: 0.1s">
-        <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-soft-green dark:bg-gray-800 flex items-center justify-center group-hover:scale-110 transition-transform">
-          <svg class="w-8 h-8 text-accent-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-warm-beige dark:bg-gray-800 flex items-center justify-center">
+          <svg class="w-8 h-8 text-earth-brown dark:text-accent-warm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
           </svg>
         </div>
@@ -411,8 +421,8 @@
         <p class="text-gray-600 dark:text-gray-400 text-sm">Hanya bahan terbaik yang kami pilih untuk kenyamanan Anda</p>
       </div>
       <div class="text-center p-6 md:p-8 bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-md transition-all hover:scale-105 animate-[slideUp_0.5s_ease-out]" style="animation-delay: 0.3s">
-        <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-soft-blue dark:bg-gray-800 flex items-center justify-center">
-          <svg class="w-8 h-8 text-accent-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-warm-beige dark:bg-gray-800 flex items-center justify-center">
+          <svg class="w-8 h-8 text-earth-brown dark:text-accent-warm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
           </svg>
         </div>
@@ -420,8 +430,8 @@
         <p class="text-gray-600 dark:text-gray-400 text-sm">Desain yang tetap menjaga aurat tanpa mengurangi keindahan</p>
       </div>
       <div class="text-center p-6 md:p-8 bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm hover:shadow-md transition-all hover:scale-105 animate-[slideUp_0.5s_ease-out]" style="animation-delay: 0.5s">
-        <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-soft-green dark:bg-gray-800 flex items-center justify-center">
-          <svg class="w-8 h-8 text-accent-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-warm-beige dark:bg-gray-800 flex items-center justify-center">
+          <svg class="w-8 h-8 text-earth-brown dark:text-accent-warm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10H1v11h22V10h-2M8 21v-6h8v6M8 12v-3a4 4 0 118 0v3" />
           </svg>
         </div>
@@ -435,7 +445,7 @@
   <section class="py-12 md:py-20 px-5 sm:px-8 max-w-7xl mx-auto">
     <div class="text-center mb-12">
       <div class="inline-flex items-center justify-center gap-2 mb-4">
-        <svg class="w-6 h-6 md:w-7 md:h-7 text-accent-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="w-6 h-6 md:w-7 md:h-7 text-earth-brown dark:text-accent-warm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
         </svg>
         <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">Tim Kami</h2>
@@ -444,29 +454,29 @@
     </div>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
       <div class="text-center group animate-[fadeIn_0.6s_ease-out]">
-        <div class="w-24 h-24 md:w-32 md:h-32 mx-auto rounded-full bg-soft-green dark:bg-gray-800 overflow-hidden shadow-md group-hover:scale-105 transition-transform group-hover:shadow-xl">
-          <img src="https://placehold.co/200x200/e8f0e8/4a674a?text=Founder" alt="Founder" class="w-full h-full object-cover">
+        <div class="w-24 h-24 md:w-32 md:h-32 mx-auto rounded-full bg-warm-beige dark:bg-gray-800 overflow-hidden shadow-md group-hover:scale-105 transition-transform group-hover:shadow-xl">
+          <img src="https://placehold.co/200x200/f5f0e8/b8926c?text=Founder" alt="Founder" class="w-full h-full object-cover">
         </div>
         <h3 class="font-semibold mt-3">Wulan Sari</h3>
         <p class="text-xs text-gray-500">Founder & Creative Director</p>
       </div>
       <div class="text-center group animate-[fadeIn_0.6s_ease-out]" style="animation-delay: 0.1s">
-        <div class="w-24 h-24 md:w-32 md:h-32 mx-auto rounded-full bg-soft-blue dark:bg-gray-800 overflow-hidden shadow-md group-hover:scale-105 transition-transform">
-          <img src="https://placehold.co/200x200/e8eef5/6f8fae?text=Designer" alt="Designer" class="w-full h-full object-cover">
+        <div class="w-24 h-24 md:w-32 md:h-32 mx-auto rounded-full bg-warm-beige dark:bg-gray-800 overflow-hidden shadow-md group-hover:scale-105 transition-transform">
+          <img src="https://placehold.co/200x200/f5f0e8/9aa87d?text=Designer" alt="Designer" class="w-full h-full object-cover">
         </div>
         <h3 class="font-semibold mt-3">Aisyah Putri</h3>
         <p class="text-xs text-gray-500">Head Designer</p>
       </div>
       <div class="text-center group animate-[fadeIn_0.6s_ease-out]" style="animation-delay: 0.2s">
-        <div class="w-24 h-24 md:w-32 md:h-32 mx-auto rounded-full bg-soft-green dark:bg-gray-800 overflow-hidden shadow-md group-hover:scale-105 transition-transform">
-          <img src="https://placehold.co/200x200/e8f0e8/4a674a?text=Marketing" alt="Marketing" class="w-full h-full object-cover">
+        <div class="w-24 h-24 md:w-32 md:h-32 mx-auto rounded-full bg-warm-beige dark:bg-gray-800 overflow-hidden shadow-md group-hover:scale-105 transition-transform">
+          <img src="https://placehold.co/200x200/f5f0e8/b8926c?text=Marketing" alt="Marketing" class="w-full h-full object-cover">
         </div>
         <h3 class="font-semibold mt-3">Fatimah Zahra</h3>
         <p class="text-xs text-gray-500">Marketing Manager</p>
       </div>
       <div class="text-center group animate-[fadeIn_0.6s_ease-out]" style="animation-delay: 0.3s">
-        <div class="w-24 h-24 md:w-32 md:h-32 mx-auto rounded-full bg-soft-blue dark:bg-gray-800 overflow-hidden shadow-md group-hover:scale-105 transition-transform">
-          <img src="https://placehold.co/200x200/e8eef5/6f8fae?text=CS" alt="Customer Service" class="w-full h-full object-cover">
+        <div class="w-24 h-24 md:w-32 md:h-32 mx-auto rounded-full bg-warm-beige dark:bg-gray-800 overflow-hidden shadow-md group-hover:scale-105 transition-transform">
+          <img src="https://placehold.co/200x200/f5f0e8/9aa87d?text=CS" alt="Customer Service" class="w-full h-full object-cover">
         </div>
         <h3 class="font-semibold mt-3">Nadia Rahma</h3>
         <p class="text-xs text-gray-500">Customer Service</p>
@@ -477,16 +487,16 @@
   <!-- CTA Section -->
   <section class="py-12 md:py-20 px-5 sm:px-8 max-w-7xl mx-auto">
     <div class="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-900/50 dark:to-gray-800/50 rounded-2xl p-6 md:p-12 text-center border border-gray-100 dark:border-gray-800 relative overflow-hidden">
-      <div class="absolute inset-0 bg-gradient-to-r from-accent-green/5 to-accent-blue/5 animate-pulse-slow"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-earth-brown/5 to-sage/5 animate-pulse-slow"></div>
       <div class="relative z-10">
         <div class="inline-flex items-center justify-center gap-2 mb-3 md:mb-4">
-          <svg class="w-6 h-6 md:w-8 md:h-8 text-accent-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-6 h-6 md:w-8 md:h-8 text-earth-brown dark:text-accent-warm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
           </svg>
           <h2 class="text-xl md:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white">Bergabung dengan Keluarga WLS</h2>
         </div>
         <p class="text-xs md:text-base text-gray-600 dark:text-gray-300 mb-4 md:mb-8">Ikuti perjalanan kami dan jadilah bagian dari komunitas muslimah yang stylish</p>
-        <a href="catalog.html" class="inline-flex items-center gap-2 bg-accent-green hover:bg-accent-green/80 text-white px-4 md:px-8 py-2 md:py-3 rounded-full font-medium text-sm md:text-base transition-all hover:scale-105 pulse-animation">
+        <a href="catalog.html" class="inline-flex items-center gap-2 bg-earth-brown hover:bg-taupe text-white px-4 md:px-8 py-2 md:py-3 rounded-full font-medium text-sm md:text-base transition-all hover:scale-105 pulse-animation">
           <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
           Lihat Koleksi
         </a>
@@ -499,54 +509,57 @@
     <div class="max-w-7xl mx-auto px-5 sm:px-8">
       <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
         <div class="col-span-2 md:col-span-1">
-          <h3 class="font-bold text-lg md:text-xl tracking-tight">
-            <span class="text-gray-900 dark:text-white">WLS</span>
-            <span class="text-accent-green dark:text-accent-green"> Fashion</span>
-          </h3>
-          <p class="text-xs md:text-sm text-gray-500 dark:text-gray-400 mt-2 md:mt-3 leading-relaxed">Menginspirasi muslimah modern dengan busana syar'i yang elegan dan nyaman.</p>
+          <div class="flex items-center gap-2 mb-2">
+            <div class="w-8 h-8 rounded-full bg-earth-brown/10 dark:bg-accent-warm/20 flex items-center justify-center">
+              <svg class="w-5 h-5 text-earth-brown dark:text-accent-warm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75 0 5.385 4.365 9.75 9.75 9.75 5.385 0 9.75-4.365 9.75-9.75 0-5.385-4.365-9.75-9.75-9.75zM12 6.75c1.5 0 2.25 1.5 2.25 2.25s-.75 2.25-2.25 2.25-2.25-1.5-2.25-2.25.75-2.25 2.25-2.25zM12 19.5c-2.25 0-4.125-1.125-5.25-2.625 1.125-1.5 3-2.625 5.25-2.625s4.125 1.125 5.25 2.625c-1.125 1.5-3 2.625-5.25 2.625z" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-lg md:text-xl tracking-tight text-gray-900 dark:text-white">WLS Fashion</h3>
+              <p class="text-[10px] text-earth-brown dark:text-accent-warm">Comfortable & Grounded</p>
+            </div>
+          </div>
+          <p class="text-xs md:text-sm text-gray-500 dark:text-gray-400 mt-2 leading-relaxed">Menginspirasi muslimah modern dengan busana syar'i yang elegan dan nyaman.</p>
         </div>
         <div>
           <h4 class="font-semibold text-sm md:text-base text-gray-900 dark:text-white mb-2 md:mb-3">Menu</h4>
           <ul class="space-y-1 md:space-y-2 text-xs md:text-sm">
-            <li><a href="index.html" class="text-gray-600 dark:text-gray-400 hover:text-accent-green transition">Beranda</a></li>
-            <li><a href="about.html" class="text-gray-600 dark:text-gray-400 hover:text-accent-green transition">Tentang Kami</a></li>
-            <li><a href="catalog.html" class="text-gray-600 dark:text-gray-400 hover:text-accent-green transition">Katalog</a></li>
-            <li><a href="contact.html" class="text-gray-600 dark:text-gray-400 hover:text-accent-green transition">Kontak</a></li>
+            <li><a href="index.html" class="text-gray-600 dark:text-gray-400 hover:text-earth-brown dark:hover:text-accent-warm transition">Beranda</a></li>
+            <li><a href="about.html" class="text-gray-600 dark:text-gray-400 hover:text-earth-brown dark:hover:text-accent-warm transition">Tentang Kami</a></li>
+            <li><a href="catalog.html" class="text-gray-600 dark:text-gray-400 hover:text-earth-brown dark:hover:text-accent-warm transition">Katalog</a></li>
+            <li><a href="contact.html" class="text-gray-600 dark:text-gray-400 hover:text-earth-brown dark:hover:text-accent-warm transition">Kontak</a></li>
           </ul>
         </div>
         <div>
           <h4 class="font-semibold text-sm md:text-base text-gray-900 dark:text-white mb-2 md:mb-3">Belanja</h4>
           <ul class="space-y-1 md:space-y-2 text-xs md:text-sm">
-            <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-accent-green transition">Cara Pemesanan</a></li>
-            <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-accent-green transition">Panduan Ukuran</a></li>
-            <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-accent-green transition">Pengiriman</a></li>
+            <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-earth-brown dark:hover:text-accent-warm transition">Cara Pemesanan</a></li>
+            <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-earth-brown dark:hover:text-accent-warm transition">Panduan Ukuran</a></li>
+            <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-earth-brown dark:hover:text-accent-warm transition">Pengiriman</a></li>
           </ul>
         </div>
         <div>
           <h4 class="font-semibold text-sm md:text-base text-gray-900 dark:text-white mb-2 md:mb-3">Ikuti Kami</h4>
           <div class="flex space-x-3 md:space-x-4 mb-3 md:mb-4">
-            <a href="#" class="text-gray-500 hover:text-accent-green transition hover:scale-110"><svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10a2 2 0 012-2h14a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2v-9z M21 7l-9-4-9 4" /></svg></a>
-            <a href="#" class="text-gray-500 hover:text-accent-green transition hover:scale-110"><svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75 0 4.306 2.785 7.96 6.646 9.258.486.09.664-.21.664-.466 0-.23-.009-.84-.014-1.65-2.703.587-3.274-1.303-3.274-1.303-.442-1.123-1.08-1.422-1.08-1.422-.883-.603.067-.591.067-.591.976.069 1.49 1.003 1.49 1.003.868 1.487 2.278 1.058 2.833.81.088-.63.34-1.058.618-1.301-2.16-.246-4.43-1.08-4.43-4.805 0-1.061.379-1.93 1-2.61-.1-.245-.434-1.234.095-2.57 0 0 .816-.261 2.67.996a9.27 9.27 0 012.43-.327c.825.004 1.656.112 2.43.327 1.854-1.257 2.67-.996 2.67-.996.528 1.336.195 2.325.095 2.57.621.68 1 1.549 1 2.61 0 3.735-2.274 4.557-4.44 4.798.35.3.664.894.664 1.802 0 1.302-.012 2.352-.012 2.672 0 .26.174.562.67.466 3.857-1.3 6.637-4.952 6.637-9.258 0-5.385-4.365-9.75-9.75-9.75z" /></svg></a>
-            <a href="#" class="text-gray-500 hover:text-accent-green transition hover:scale-110"><svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" /></svg></a>
+            <a href="#" class="text-gray-500 hover:text-earth-brown dark:hover:text-accent-warm transition hover:scale-110"><svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10a2 2 0 012-2h14a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2v-9z M21 7l-9-4-9 4" /></svg></a>
+            <a href="#" class="text-gray-500 hover:text-earth-brown dark:hover:text-accent-warm transition hover:scale-110"><svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75 0 4.306 2.785 7.96 6.646 9.258.486.09.664-.21.664-.466 0-.23-.009-.84-.014-1.65-2.703.587-3.274-1.303-3.274-1.303-.442-1.123-1.08-1.422-1.08-1.422-.883-.603.067-.591.067-.591.976.069 1.49 1.003 1.49 1.003.868 1.487 2.278 1.058 2.833.81.088-.63.34-1.058.618-1.301-2.16-.246-4.43-1.08-4.43-4.805 0-1.061.379-1.93 1-2.61-.1-.245-.434-1.234.095-2.57 0 0 .816-.261 2.67.996a9.27 9.27 0 012.43-.327c.825.004 1.656.112 2.43.327 1.854-1.257 2.67-.996 2.67-.996.528 1.336.195 2.325.095 2.57.621.68 1 1.549 1 2.61 0 3.735-2.274 4.557-4.44 4.798.35.3.664.894.664 1.802 0 1.302-.012 2.352-.012 2.672 0 .26.174.562.67.466 3.857-1.3 6.637-4.952 6.637-9.258 0-5.385-4.365-9.75-9.75-9.75z" /></svg></a>
+            <a href="#" class="text-gray-500 hover:text-earth-brown dark:hover:text-accent-warm transition hover:scale-110"><svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" /></svg></a>
           </div>
           <div class="flex gap-2 md:gap-3">
-            <a href="#" class="inline-flex items-center gap-1 md:gap-2 bg-[#ee4d2d] hover:bg-[#d43f21] text-white px-2 md:px-4 py-1 md:py-2 rounded-lg text-[10px] md:text-sm font-medium transition hover:scale-105">
-              <svg class="w-3 h-3 md:w-4 md:h-4" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm0 13c-2.33 0-4.31-1.46-5.11-3.5h10.22c-.8 2.04-2.78 3.5-5.11 3.5z"/>
-              </svg>
+            <a href="https://shopee.co.id/wls.official" target="_blank" class="inline-flex items-center gap-1 md:gap-2 bg-[#ee4d2d] hover:bg-[#d43f21] text-white px-2 md:px-4 py-1 md:py-2 rounded-lg text-[10px] md:text-sm font-medium transition hover:scale-105">
+              <svg class="w-3 h-3 md:w-4 md:h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm0 13c-2.33 0-4.31-1.46-5.11-3.5h10.22c-.8 2.04-2.78 3.5-5.11 3.5z"/></svg>
               Shopee
             </a>
-            <a href="#" class="inline-flex items-center gap-1 md:gap-2 bg-[#010101] hover:bg-gray-800 text-white px-2 md:px-4 py-1 md:py-2 rounded-lg text-[10px] md:text-sm font-medium transition hover:scale-105">
-              <svg class="w-3 h-3 md:w-4 md:h-4" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 1.1.2V9.05a6.27 6.27 0 0 0-1.1-.1 6.33 6.33 0 0 0-6.32 6.33 6.33 6.33 0 0 0 9.46 5.46 6.33 6.33 0 0 0 2.97-5.46V7.88a7.63 7.63 0 0 0 4.5 1.44V5.85a4.83 4.83 0 0 1-2.4.84z"/>
-              </svg>
+            <a href="https://www.tiktok.com/@wls.fashion" target="_blank" class="inline-flex items-center gap-1 md:gap-2 bg-[#010101] hover:bg-gray-800 text-white px-2 md:px-4 py-1 md:py-2 rounded-lg text-[10px] md:text-sm font-medium transition hover:scale-105">
+              <svg class="w-3 h-3 md:w-4 md:h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 1.1.2V9.05a6.27 6.27 0 0 0-1.1-.1 6.33 6.33 0 0 0-6.32 6.33 6.33 6.33 0 0 0 9.46 5.46 6.33 6.33 0 0 0 2.97-5.46V7.88a7.63 7.63 0 0 0 4.5 1.44V5.85a4.83 4.83 0 0 1-2.4.84z"/></svg>
               TikTok
             </a>
           </div>
         </div>
       </div>
       <div class="text-center text-[10px] md:text-xs text-gray-400 pt-6 md:pt-8 mt-6 md:mt-8 border-t border-gray-100 dark:border-gray-800">
-        © 2025 WLS Fashion | Modest Muslimah Fashion. All rights reserved.
+        © 2025 WLS Fashion | Comfortable & Grounded. All rights reserved.
       </div>
     </div>
   </footer>
@@ -596,26 +609,6 @@
         mobilePanel.classList.toggle('hidden'); 
       });
     }
-    
-    // Intersection Observer for scroll animations
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
-    
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
-          observer.unobserve(entry.target);
-        }
-      });
-    }, observerOptions);
-    
-    document.querySelectorAll('.animate-fade-in, .animate-slide-up, .animate-slide-right').forEach(el => {
-      observer.observe(el);
-    });
   </script>
 </body>
 </html>

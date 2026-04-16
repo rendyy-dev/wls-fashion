@@ -16,11 +16,15 @@
             'sans': ['Inter', 'system-ui', 'sans-serif'],
           },
           colors: {
-            'soft-green': '#e8f0e8',
-            'soft-blue': '#e8eef5',
-            'accent-green': '#6b8c6b',
-            'accent-blue': '#6f8fae',
-            'dark-bg': '#0a0a0a',
+            'soft-earth': '#f5f0e8',
+            'warm-beige': '#e8e0d4',
+            'earth-brown': '#8b7355',
+            'taupe': '#a28b6f',
+            'sage': '#9aa87d',
+            'dark-earth': '#2c241a',
+            'accent-warm': '#b8926c',
+            'accent-soft': '#cbb58b',
+            'dark-bg': '#1a1612',
             'shopee-orange': '#ee4d2d',
             'tiktok-black': '#010101',
           },
@@ -60,8 +64,8 @@
               '100%': { backgroundPosition: '1000px 0' },
             },
             glow: {
-              '0%, 100%': { boxShadow: '0 0 5px rgba(107,140,107,0.2)' },
-              '50%': { boxShadow: '0 0 20px rgba(107,140,107,0.5)' },
+              '0%, 100%': { boxShadow: '0 0 5px rgba(139,115,85,0.2)' },
+              '50%': { boxShadow: '0 0 20px rgba(139,115,85,0.5)' },
             },
           }
         }
@@ -77,6 +81,7 @@
     }
     .product-card {
       transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      cursor: pointer;
     }
     .product-card:hover {
       transform: translateY(-6px) scale(1.02);
@@ -98,11 +103,11 @@
       left: 0;
       width: 0;
       height: 2px;
-      background-color: #6b8c6b;
+      background-color: #b8926c;
       transition: width 0.3s ease;
     }
     .dark .nav-link::after {
-      background-color: #8fbc8f;
+      background-color: #cbb58b;
     }
     .nav-link:hover::after,
     .nav-link.active::after {
@@ -138,7 +143,7 @@
     .floating-particle {
       position: absolute;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(107,140,107,0.1) 0%, rgba(107,140,107,0) 70%);
+      background: radial-gradient(circle, rgba(139,115,85,0.1) 0%, rgba(139,115,85,0) 70%);
       animation: floatParticle 15s infinite ease-in-out;
     }
     @keyframes floatParticle {
@@ -154,37 +159,49 @@
       0%, 100% { opacity: 1; transform: scale(1); }
       50% { opacity: 0.9; transform: scale(1.05); }
     }
-    /* Gradient border animation for featured card */
-    .animated-border {
-      position: relative;
-      background: linear-gradient(60deg, #6b8c6b, #6f8fae, #6b8c6b);
-      background-size: 300% 300%;
-      animation: gradientShift 3s ease infinite;
+    /* Modal animation */
+    .modal-overlay {
+      animation: fadeIn 0.3s ease-out;
+      z-index: 9999;
     }
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    .modal-content {
+      animation: modalSlideUp 0.4s ease-out;
+      max-width: 950px;
+      width: 90%;
     }
-    /* Hover shine effect */
-    .shine-effect {
-      position: relative;
-      overflow: hidden;
+    @keyframes modalSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
-    .shine-effect::after {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -60%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(115deg, rgba(255,255,255,0) 10%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 90%);
-      transform: rotate(25deg);
-      animation: shine 4s infinite;
+    /* Hero image hover effect */
+    .hero-image {
+      transition: transform 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1);
     }
-    @keyframes shine {
-      0% { transform: translateX(-100%) rotate(25deg); }
-      20%, 100% { transform: translateX(100%) rotate(25deg); }
+    .hero-image:hover {
+      transform: scale(1.02);
+    }
+    /* Color indicator dot */
+    .color-dot {
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .color-dot:hover {
+      transform: scale(1.2);
+    }
+    /* Thumbnail active state */
+    .thumbnail-active {
+      border-color: #b8926c;
+      box-shadow: 0 0 0 2px #b8926c;
+    }
+    .dark .thumbnail-active {
+      border-color: #cbb58b;
+      box-shadow: 0 0 0 2px #cbb58b;
     }
   </style>
 </head>
@@ -199,12 +216,89 @@
     <div class="floating-particle w-48 h-48 top-1/2 left-1/4" style="animation-duration: 15s; animation-delay: -3s;"></div>
   </div>
 
+  <!-- Modal Popup untuk Detail Produk -->
+  <div id="productModal" class="fixed inset-0 z-[9999] hidden items-center justify-center p-4 modal-overlay" style="background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);">
+    <div class="modal-content bg-white dark:bg-dark-earth rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto relative shadow-2xl">
+      <!-- Tombol Close -->
+      <button id="closeModal" class="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 transition flex items-center justify-center">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+      
+      <div class="flex flex-col md:flex-row">
+        <!-- Gambar Produk Section -->
+        <div class="md:w-1/2 p-4 md:p-5">
+          <!-- Main Image -->
+          <div class="bg-gray-100 dark:bg-gray-800 rounded-xl overflow-hidden mb-4">
+            <img id="modalImage" src="" alt="Product Image" class="w-full h-full object-cover aspect-square">
+          </div>
+          <!-- Thumbnail Warna -->
+          <div class="flex gap-2 justify-center flex-wrap" id="modalThumbnails">
+            <!-- Thumbnails akan diisi JavaScript -->
+          </div>
+        </div>
+        
+        <!-- Detail Produk -->
+        <div class="md:w-1/2 p-5 md:p-6">
+          <!-- Badge Kategori -->
+          <span id="modalCategory" class="inline-block px-3 py-1 rounded-full text-xs font-medium bg-warm-beige dark:bg-gray-800 text-earth-brown dark:text-accent-warm mb-2"></span>
+          
+          <h2 id="modalTitle" class="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-2"></h2>
+          <p id="modalDescription" class="text-gray-600 dark:text-gray-300 text-sm mb-4 leading-relaxed"></p>
+          
+          <!-- Harga dengan diskon -->
+          <div class="mb-4">
+            <span id="modalOriginalPrice" class="text-sm text-gray-400 line-through mr-2"></span>
+            <span id="modalPrice" class="text-2xl md:text-3xl font-bold text-earth-brown dark:text-accent-warm"></span>
+          </div>
+          
+          <!-- Detail Spesifikasi -->
+          <div class="border-t border-gray-100 dark:border-gray-700 pt-3 mb-3">
+            <h3 class="font-semibold text-sm text-gray-900 dark:text-white mb-2">Spesifikasi</h3>
+            <ul id="modalSpecs" class="space-y-1.5 text-xs text-gray-600 dark:text-gray-400">
+              <!-- Spesifikasi akan diisi JavaScript -->
+            </ul>
+          </div>
+          
+          <!-- Tombol Beli -->
+          <div class="space-y-2">
+            <p class="text-[11px] text-gray-500">Beli di:</p>
+            <div class="flex gap-2">
+              <a id="modalShopeeLink" href="#" target="_blank" class="flex-1 bg-[#ee4d2d] hover:bg-[#d43f21] text-white py-2 rounded-lg text-sm font-medium transition hover:scale-105 flex items-center justify-center gap-2">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm0 13c-2.33 0-4.31-1.46-5.11-3.5h10.22c-.8 2.04-2.78 3.5-5.11 3.5z"/>
+                </svg>
+                Shopee
+              </a>
+              <a id="modalTiktokLink" href="#" target="_blank" class="flex-1 bg-[#010101] hover:bg-gray-800 text-white py-2 rounded-lg text-sm font-medium transition hover:scale-105 flex items-center justify-center gap-2">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 1.1.2V9.05a6.27 6.27 0 0 0-1.1-.1 6.33 6.33 0 0 0-6.32 6.33 6.33 6.33 0 0 0 9.46 5.46 6.33 6.33 0 0 0 2.97-5.46V7.88a7.63 7.63 0 0 0 4.5 1.44V5.85a4.83 4.83 0 0 1-2.4.84z"/>
+                </svg>
+                TikTok
+              </a>
+            </div>
+            <a id="modalWhatsappLink" href="#" target="_blank" class="block w-full bg-earth-brown hover:bg-taupe text-white py-2 rounded-lg text-sm font-medium transition hover:scale-105 text-center mt-2">
+              Beli via WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Navigation Bar -->
   <nav class="sticky top-0 z-50 bg-white/95 dark:bg-dark-bg/95 backdrop-blur-md border-b border-gray-100 dark:border-gray-800 relative">
-    <div class="max-w-7xl mx-auto px-5 sm:px-8 py-4 flex items-center justify-between">
-      <a href="index.html" class="text-2xl font-bold tracking-tight hover:scale-105 transition-transform">
-        <span class="text-gray-900 dark:text-white">WLS</span>
-        <span class="text-accent-green dark:text-accent-green"> Fashion</span>
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 py-3 flex items-center justify-between">
+      <!-- LOGO DENGAN FILE PNG -->
+      <a href="index.html" class="flex items-center gap-3 hover:scale-105 transition-transform">
+        <div class="w-10 h-10 md:w-12 md:h-12 overflow-hidden rounded-full">
+          <img src="assets/logo_wls_dark.png" alt="WLS Fashion Logo" class="w-full h-full object-cover">
+        </div>
+        <div>
+          <span class="text-lg md:text-xl font-bold tracking-tight text-gray-900 dark:text-white">WLS Fashion</span>
+          <p class="text-[10px] md:text-xs text-earth-brown dark:text-accent-warm tracking-wide">Comfortable & Grounded</p>
+        </div>
       </a>
       <div class="hidden md:flex items-center space-x-8">
         <a href="index.html" class="nav-link active text-sm font-medium text-gray-900 dark:text-white">Beranda</a>
@@ -238,56 +332,94 @@
     </div>
   </nav>
 
-  <!-- HERO SECTION - dengan animasi float dan shine -->
-  <section class="py-12 md:py-28 relative">
+  <!-- HERO SECTION -->
+  <section class="py-8 md:py-20 relative overflow-hidden">
     <div class="max-w-7xl mx-auto px-5 sm:px-8">
-      <div class="flex flex-row md:grid md:grid-cols-2 gap-6 md:gap-12 items-center">
-        <div class="w-3/5 md:w-full space-y-4 md:space-y-6 animate-[slideUp_0.5s_ease-out]">
-          <span class="inline-flex items-center gap-2 px-3 md:px-4 py-1 md:py-1.5 rounded-full bg-soft-green dark:bg-gray-800 text-accent-green dark:text-accent-green text-xs md:text-sm font-medium animate-pulse-slow">
+      <!-- Desktop Layout -->
+      <div class="hidden md:grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+        <div class="space-y-4 md:space-y-6 animate-[slideUp_0.5s_ease-out]">
+          <span class="inline-flex items-center gap-2 px-3 md:px-4 py-1 md:py-1.5 rounded-full bg-warm-beige dark:bg-gray-800 text-earth-brown dark:text-accent-warm text-xs md:text-sm font-medium animate-pulse-slow">
             <svg class="w-3 h-3 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
             </svg>
             Koleksi Terbaru 2025
           </span>
-          <h1 class="text-xl md:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight text-gray-900 dark:text-white leading-tight">
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900 dark:text-white leading-tight">
             Elegan dalam<br>
-            <span class="text-accent-green dark:text-accent-green relative">
+            <span class="text-earth-brown dark:text-accent-warm relative">
               Kesederhanaan
               <svg class="absolute -bottom-2 left-0 w-full h-1" viewBox="0 0 200 8" preserveAspectRatio="none">
-                <path d="M0,5 L200,5" stroke="currentColor" stroke-width="2" stroke-dasharray="5 5" class="text-accent-green"/>
+                <path d="M0,5 L200,5" stroke="currentColor" stroke-width="2" stroke-dasharray="5 5" class="text-earth-brown dark:text-accent-warm"/>
               </svg>
             </span>
           </h1>
-          <p class="text-xs md:text-base lg:text-lg text-gray-600 dark:text-gray-300 leading-relaxed hidden md:block">
+          <p class="text-base lg:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
             Temukan koleksi busana muslimah premium dengan bahan nyaman, desain elegan, dan tetap syar'i. 
             Hadir untuk wanita modern yang percaya diri.
           </p>
-          <div class="flex flex-wrap gap-2 md:gap-4">
-            <a href="catalog.html" class="px-4 md:px-8 py-1.5 md:py-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-full font-medium text-xs md:text-base hover:bg-gray-800 dark:hover:bg-gray-100 transition shadow-sm hover:shadow-lg hover:scale-105 transition-all">
+          <div class="flex flex-wrap gap-4">
+            <a href="catalog.html" class="px-6 md:px-8 py-2.5 md:py-3 bg-earth-brown dark:bg-accent-warm text-white dark:text-dark-bg rounded-full font-medium text-sm md:text-base hover:bg-taupe dark:hover:bg-accent-soft transition shadow-sm hover:shadow-lg hover:scale-105 transition-all">
               Belanja Sekarang
             </a>
-            <a href="about.html" class="px-4 md:px-8 py-1.5 md:py-3 bg-transparent border border-gray-300 dark:border-gray-600 rounded-full font-medium text-xs md:text-base hover:border-accent-green hover:text-accent-green transition hover:scale-105">
+            <a href="about.html" class="px-6 md:px-8 py-2.5 md:py-3 bg-transparent border border-gray-300 dark:border-gray-600 rounded-full font-medium text-sm md:text-base hover:border-earth-brown hover:text-earth-brown dark:hover:border-accent-warm dark:hover:text-accent-warm transition hover:scale-105">
               Tentang Kami
             </a>
           </div>
         </div>
-        <div class="w-2/5 md:w-full relative flex justify-center animate-[fadeIn_0.6s_ease-out]">
-          <div class="w-28 h-28 sm:w-36 sm:h-36 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full bg-soft-green dark:bg-gray-800 overflow-hidden shadow-lg animate-float shine-effect">
-            <img src="https://placehold.co/600x800/e8f0e8/4a674a?text=WLS+Fashion" alt="WLS Fashion Model" class="w-full h-full object-cover">
+        <div class="relative flex justify-center animate-[fadeIn_0.6s_ease-out]">
+          <div class="relative w-full max-w-md">
+            <div class="absolute -inset-4 bg-gradient-to-r from-earth-brown/10 to-sage/10 rounded-2xl blur-xl animate-pulse-slow"></div>
+            <div class="relative rounded-2xl overflow-hidden shadow-xl hero-image">
+              <img src="assets/hero-model.jpeg" alt="WLS Fashion Model" class="w-full h-full object-cover aspect-square">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent rounded-2xl"></div>
+            </div>
+            <div class="absolute -bottom-3 -right-3 w-20 h-20 bg-earth-brown/10 rounded-full blur-2xl"></div>
           </div>
         </div>
       </div>
-      <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed mt-4 md:hidden animate-fade-in">
-        Temukan koleksi busana muslimah premium dengan bahan nyaman, desain elegan, dan tetap syar'i.
-      </p>
+
+      <!-- Mobile Layout -->
+      <div class="flex md:hidden flex-row gap-4 items-center">
+        <div class="w-[55%] space-y-2 animate-[slideUp_0.5s_ease-out]">
+          <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-warm-beige dark:bg-gray-800 text-earth-brown dark:text-accent-warm text-[10px] font-medium">
+            <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+            </svg>
+            Koleksi Baru
+          </span>
+          <h1 class="text-base font-bold tracking-tight text-gray-900 dark:text-white leading-tight">
+            Elegan dalam<br>
+            <span class="text-earth-brown dark:text-accent-warm">Kesederhanaan</span>
+          </h1>
+          <p class="text-[10px] text-gray-600 dark:text-gray-300 leading-relaxed line-clamp-3">
+            Busana muslimah premium, bahan nyaman, desain elegan, tetap syar'i.
+          </p>
+          <div class="flex flex-wrap gap-1.5">
+            <a href="catalog.html" class="px-3 py-1 bg-earth-brown dark:bg-accent-warm text-white dark:text-dark-bg rounded-full text-[10px] font-medium hover:bg-taupe transition">
+              Belanja
+            </a>
+            <a href="about.html" class="px-3 py-1 bg-transparent border border-gray-300 dark:border-gray-600 rounded-full text-[10px] font-medium hover:border-earth-brown hover:text-earth-brown transition">
+              Tentang
+            </a>
+          </div>
+        </div>
+        <div class="w-[45%] relative flex justify-center animate-[fadeIn_0.6s_ease-out]">
+          <div class="relative w-full">
+            <div class="absolute -inset-2 bg-gradient-to-r from-earth-brown/10 to-sage/10 rounded-xl blur-md"></div>
+            <div class="relative rounded-xl overflow-hidden shadow-md hero-image">
+              <img src="assets/hero-model.jpeg" alt="WLS Fashion Model" class="w-full h-full object-cover aspect-square">
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- KEUNGGULAN BRAND - Auto Scroll tanpa digeser -->
+  <!-- KEUNGGULAN BRAND - Auto Scroll -->
   <section class="py-12 md:py-20 px-5 sm:px-8 max-w-7xl mx-auto">
     <div class="text-center mb-8 md:mb-12">
       <div class="inline-flex items-center justify-center gap-2 mb-3 md:mb-4">
-        <svg class="w-6 h-6 md:w-8 md:h-8 text-accent-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="w-6 h-6 md:w-8 md:h-8 text-earth-brown dark:text-accent-warm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
         </svg>
         <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white">Mengapa Memilih WLS Fashion?</h2>
@@ -295,64 +427,46 @@
       <p class="text-sm md:text-base text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Kualitas terbaik dengan sentuhan modern yang tetap menjaga nilai syar'i</p>
     </div>
     
-    <!-- Auto Scroll Container (Mobile & Desktop) -->
     <div class="auto-scroll-container">
       <div class="auto-scroll-track">
-        <!-- Card 1 -->
         <div class="flex-shrink-0 w-64 md:w-72 text-center p-5 md:p-6 rounded-xl bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-md hover:shadow-xl transition-all mx-3 hover:scale-105">
-          <div class="w-12 h-12 md:w-14 md:h-14 mx-auto mb-3 md:mb-4 rounded-full bg-soft-green dark:bg-gray-800 flex items-center justify-center animate-bounce-slow">
-            <svg class="w-6 h-6 md:w-7 md:h-7 text-accent-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-            </svg>
+          <div class="w-12 h-12 md:w-14 md:h-14 mx-auto mb-3 md:mb-4 rounded-full bg-warm-beige dark:bg-gray-800 flex items-center justify-center animate-bounce-slow">
+            <svg class="w-6 h-6 md:w-7 md:h-7 text-earth-brown dark:text-accent-warm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
           </div>
           <h3 class="font-semibold text-base md:text-lg mb-1 md:mb-2">Bahan Premium</h3>
           <p class="text-xs md:text-sm text-gray-600 dark:text-gray-400">Katun berkualitas, jersey lembut, bahan adem</p>
         </div>
-        <!-- Card 2 -->
         <div class="flex-shrink-0 w-64 md:w-72 text-center p-5 md:p-6 rounded-xl bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-md hover:shadow-xl transition-all mx-3 hover:scale-105">
-          <div class="w-12 h-12 md:w-14 md:h-14 mx-auto mb-3 md:mb-4 rounded-full bg-soft-blue dark:bg-gray-800 flex items-center justify-center animate-bounce-slow" style="animation-delay: 0.2s;">
-            <svg class="w-6 h-6 md:w-7 md:h-7 text-accent-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-            </svg>
+          <div class="w-12 h-12 md:w-14 md:h-14 mx-auto mb-3 md:mb-4 rounded-full bg-warm-beige dark:bg-gray-800 flex items-center justify-center animate-bounce-slow" style="animation-delay: 0.2s;">
+            <svg class="w-6 h-6 md:w-7 md:h-7 text-earth-brown dark:text-accent-warm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
           </div>
           <h3 class="font-semibold text-base md:text-lg mb-1 md:mb-2">100% Syar'i</h3>
           <p class="text-xs md:text-sm text-gray-600 dark:text-gray-400">Desain longgar, panjang sesuai syariat</p>
         </div>
-        <!-- Card 3 -->
         <div class="flex-shrink-0 w-64 md:w-72 text-center p-5 md:p-6 rounded-xl bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-md hover:shadow-xl transition-all mx-3 hover:scale-105">
-          <div class="w-12 h-12 md:w-14 md:h-14 mx-auto mb-3 md:mb-4 rounded-full bg-soft-green dark:bg-gray-800 flex items-center justify-center animate-bounce-slow" style="animation-delay: 0.4s;">
-            <svg class="w-6 h-6 md:w-7 md:h-7 text-accent-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
+          <div class="w-12 h-12 md:w-14 md:h-14 mx-auto mb-3 md:mb-4 rounded-full bg-warm-beige dark:bg-gray-800 flex items-center justify-center animate-bounce-slow" style="animation-delay: 0.4s;">
+            <svg class="w-6 h-6 md:w-7 md:h-7 text-earth-brown dark:text-accent-warm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
           </div>
           <h3 class="font-semibold text-base md:text-lg mb-1 md:mb-2">Pengiriman Cepat</h3>
           <p class="text-xs md:text-sm text-gray-600 dark:text-gray-400">Proses cepat, packing rapi, tracking real-time</p>
         </div>
-        <!-- Card 4 -->
         <div class="flex-shrink-0 w-64 md:w-72 text-center p-5 md:p-6 rounded-xl bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-md hover:shadow-xl transition-all mx-3 hover:scale-105">
-          <div class="w-12 h-12 md:w-14 md:h-14 mx-auto mb-3 md:mb-4 rounded-full bg-soft-blue dark:bg-gray-800 flex items-center justify-center animate-bounce-slow" style="animation-delay: 0.6s;">
-            <svg class="w-6 h-6 md:w-7 md:h-7 text-accent-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-            </svg>
+          <div class="w-12 h-12 md:w-14 md:h-14 mx-auto mb-3 md:mb-4 rounded-full bg-warm-beige dark:bg-gray-800 flex items-center justify-center animate-bounce-slow" style="animation-delay: 0.6s;">
+            <svg class="w-6 h-6 md:w-7 md:h-7 text-earth-brown dark:text-accent-warm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
           </div>
           <h3 class="font-semibold text-base md:text-lg mb-1 md:mb-2">Garansi Kualitas</h3>
           <p class="text-xs md:text-sm text-gray-600 dark:text-gray-400">Quality control ketat sebelum dikirim</p>
         </div>
-        <!-- Duplicate for seamless loop -->
         <div class="flex-shrink-0 w-64 md:w-72 text-center p-5 md:p-6 rounded-xl bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-md hover:shadow-xl transition-all mx-3 hover:scale-105">
-          <div class="w-12 h-12 md:w-14 md:h-14 mx-auto mb-3 md:mb-4 rounded-full bg-soft-green dark:bg-gray-800 flex items-center justify-center animate-bounce-slow">
-            <svg class="w-6 h-6 md:w-7 md:h-7 text-accent-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-            </svg>
+          <div class="w-12 h-12 md:w-14 md:h-14 mx-auto mb-3 md:mb-4 rounded-full bg-warm-beige dark:bg-gray-800 flex items-center justify-center animate-bounce-slow">
+            <svg class="w-6 h-6 md:w-7 md:h-7 text-earth-brown dark:text-accent-warm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
           </div>
           <h3 class="font-semibold text-base md:text-lg mb-1 md:mb-2">Bahan Premium</h3>
           <p class="text-xs md:text-sm text-gray-600 dark:text-gray-400">Katun berkualitas, jersey lembut, bahan adem</p>
         </div>
         <div class="flex-shrink-0 w-64 md:w-72 text-center p-5 md:p-6 rounded-xl bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-md hover:shadow-xl transition-all mx-3 hover:scale-105">
-          <div class="w-12 h-12 md:w-14 md:h-14 mx-auto mb-3 md:mb-4 rounded-full bg-soft-blue dark:bg-gray-800 flex items-center justify-center animate-bounce-slow" style="animation-delay: 0.2s;">
-            <svg class="w-6 h-6 md:w-7 md:h-7 text-accent-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-            </svg>
+          <div class="w-12 h-12 md:w-14 md:h-14 mx-auto mb-3 md:mb-4 rounded-full bg-warm-beige dark:bg-gray-800 flex items-center justify-center animate-bounce-slow" style="animation-delay: 0.2s;">
+            <svg class="w-6 h-6 md:w-7 md:h-7 text-earth-brown dark:text-accent-warm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
           </div>
           <h3 class="font-semibold text-base md:text-lg mb-1 md:mb-2">100% Syar'i</h3>
           <p class="text-xs md:text-sm text-gray-600 dark:text-gray-400">Desain longgar, panjang sesuai syariat</p>
@@ -361,147 +475,241 @@
     </div>
   </section>
 
-  <!-- PRODUK UNGGULAN - dengan card "Lihat Katalog" -->
+  <!-- PRODUK UNGGULAN - Abaya & Gamis (3 Produk + Card Lihat Katalog) -->
   <section class="py-12 md:py-20 px-5 sm:px-8 max-w-7xl mx-auto bg-gray-50 dark:bg-gray-900/30">
     <div class="flex justify-between items-center mb-6 md:mb-10 flex-wrap gap-3">
       <div class="flex items-center gap-2">
-        <svg class="w-5 h-5 md:w-6 md:h-6 text-accent-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="w-5 h-5 md:w-6 md:h-6 text-earth-brown dark:text-accent-warm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
         </svg>
-        <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white">Produk Unggulan</h2>
+        <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white">Koleksi Unggulan</h2>
       </div>
-      <a href="catalog.html" class="text-accent-green dark:text-accent-green font-medium text-sm md:text-base flex items-center gap-1 hover:gap-2 transition-all group">
+      <a href="catalog.html" class="text-earth-brown dark:text-accent-warm font-medium text-sm md:text-base flex items-center gap-1 hover:gap-2 transition-all group">
         Lihat Semua
         <svg class="w-3 h-3 md:w-4 md:h-4 group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
       </a>
     </div>
-    <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
-      <!-- Product 1 -->
-      <div class="product-card bg-white dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-800 overflow-hidden shadow-sm shine-effect">
+    
+    <div class="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6" id="productGrid">
+      <!-- Product 1 - Abaya Madina Arabic -->
+      <div class="product-card bg-white dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-800 overflow-hidden shadow-sm shine-effect" data-product-id="1">
         <div class="overflow-hidden bg-gray-100 dark:bg-gray-800 aspect-[3/4]">
-          <img src="https://placehold.co/600x800/d9e2e8/4a674a?text=Abaya+Jersey" alt="Abaya Jersey Premium" class="product-img w-full h-full object-cover">
+          <img id="product1Image" src="/assets/abaya-arabic/abaya-madina-abu.jpeg" alt="Abaya Madina Arabic" class="product-img w-full h-full object-cover">
         </div>
         <div class="p-2 md:p-5">
-          <h3 class="font-semibold text-xs md:text-lg text-gray-800 dark:text-white mb-0.5 md:mb-1">Abaya Jersey Premium</h3>
-          <p class="text-[10px] md:text-sm text-gray-500 dark:text-gray-400 mb-1 md:mb-3 hidden md:block">Bahan jersey lembut, flowy, nyaman dipakai sehari-hari</p>
-          <span class="text-sm md:text-xl font-bold text-gray-900 dark:text-white block mb-1 md:mb-3">Rp 349.000</span>
+          <h3 class="font-semibold text-xs md:text-lg text-gray-800 dark:text-white mb-0.5 md:mb-1">Abaya Madina Arabic</h3>
+          <p class="text-[10px] md:text-sm text-gray-500 dark:text-gray-400 mb-1 md:mb-3 hidden md:block">Gamis Syari Renda Bordir Mewah Premium - Busui Friendly Bahan Syakila</p>
+          
+          <div class="mb-1 md:mb-2">
+            <span class="text-xs text-gray-400 line-through">Rp 180.000 - Rp 240.000</span>
+            <span class="text-sm md:text-xl font-bold text-earth-brown dark:text-accent-warm block">Rp 80.316 - Rp 144.000</span>
+          </div>
+          
+          <div class="flex gap-1.5 mb-2 md:mb-3">
+            <div class="color-dot w-4 h-4 rounded-full border border-gray-300 cursor-pointer" style="background-color: #9e9e9e;" data-img="/assets/abaya-arabic/abaya-madina-abu.jpeg" title="Abu-abu"></div>
+            <div class="color-dot w-4 h-4 rounded-full border border-gray-300 cursor-pointer" style="background-color: #1a1a1a;" data-img="/assets/abaya-arabic/abaya-madina-hitam.jpeg" title="Hitam"></div>
+            <div class="color-dot w-4 h-4 rounded-full border border-gray-300 cursor-pointer" style="background-color: #ffffff;" data-img="/assets/abaya-arabic/abaya-madina-putih.jpeg" title="Putih"></div>
+            <div class="color-dot w-4 h-4 rounded-full border border-gray-300 cursor-pointer" style="background-color: #4b5320;" data-img="/assets/abaya-arabic/abaya-madina-army.jpeg" title="Army"></div>
+            <div class="color-dot w-4 h-4 rounded-full border border-gray-300 cursor-pointer" style="background-color: #c8a2c8;" data-img="/assets/abaya-arabic/abaya-madina-lilac.jpeg" title="Lilac"></div>
+            <div class="color-dot w-4 h-4 rounded-full border border-gray-300 cursor-pointer" style="background-color: #a0522d;" data-img="/assets/abaya-arabic/abaya-madina-moca.jpeg" title="Moca"></div>
+            <div class="color-dot w-4 h-4 rounded-full border border-gray-300 cursor-pointer" style="background-color: #556b2f;" data-img="/assets/abaya-arabic/abaya-madina-olive.jpeg" title="Olive"></div>
+          </div>
+          
           <div class="block md:hidden">
             <p class="text-[8px] text-gray-400 mb-1">beli di:</p>
-            <div class="flex gap-2">
-              <a href="#" class="flex-1 bg-[#ee4d2d] hover:bg-[#d43f21] text-white py-1.5 rounded-lg text-xs font-medium transition flex items-center justify-center gap-1 hover:scale-105">
-                <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm0 13c-2.33 0-4.31-1.46-5.11-3.5h10.22c-.8 2.04-2.78 3.5-5.11 3.5z"/>
-                </svg>
+            <div class="flex flex-col gap-1.5">
+              <a href="https://id.shp.ee/VxZ3LBak" target="_blank" class="shopee-link w-full bg-[#ee4d2d] hover:bg-[#d43f21] text-white py-1.5 rounded-lg text-xs font-medium transition flex items-center justify-center gap-1 hover:scale-105">
+                <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm0 13c-2.33 0-4.31-1.46-5.11-3.5h10.22c-.8 2.04-2.78 3.5-5.11 3.5z"/></svg>
                 Shopee
               </a>
-              <a href="#" class="flex-1 bg-[#010101] hover:bg-gray-900 text-white py-1.5 rounded-lg text-xs font-medium transition flex items-center justify-center gap-1 hover:scale-105">
-                <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 1.1.2V9.05a6.27 6.27 0 0 0-1.1-.1 6.33 6.33 0 0 0-6.32 6.33 6.33 6.33 0 0 0 9.46 5.46 6.33 6.33 0 0 0 2.97-5.46V7.88a7.63 7.63 0 0 0 4.5 1.44V5.85a4.83 4.83 0 0 1-2.4.84z"/>
-                </svg>
+              <a href="https://vt.tokopedia.com/t/ZS9LmTSMaVgKU-OP3pJ/" target="_blank" class="tiktok-link w-full bg-[#010101] hover:bg-gray-800 text-white py-1.5 rounded-lg text-xs font-medium transition flex items-center justify-center gap-1 hover:scale-105">
+                <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 1.1.2V9.05a6.27 6.27 0 0 0-1.1-.1 6.33 6.33 0 0 0-6.32 6.33 6.33 6.33 0 0 0 9.46 5.46 6.33 6.33 0 0 0 2.97-5.46V7.88a7.63 7.63 0 0 0 4.5 1.44V5.85a4.83 4.83 0 0 1-2.4.84z"/></svg>
                 TikTok
+              </a>
+              <a href="https://wa.me/6281563331110" target="_blank" class="whatsapp-link w-full bg-earth-brown hover:bg-taupe text-white py-1.5 rounded-lg text-xs font-medium transition flex items-center justify-center gap-1 hover:scale-105">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                WhatsApp
               </a>
             </div>
           </div>
-          <div class="hidden md:flex justify-between items-center">
-            <a href="https://wa.me/6281234567890?text=Halo%20WLS%20Fashion%2C%20saya%20mau%20beli%20Abaya%20Jersey%20Premium" target="_blank" class="bg-accent-green hover:bg-accent-green/80 text-white px-4 py-2 rounded-lg text-sm font-medium transition hover:scale-105">Beli</a>
-          </div>
-        </div>
-      </div>
-      <!-- Product 2 -->
-      <div class="product-card bg-white dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-800 overflow-hidden shadow-sm shine-effect">
-        <div class="overflow-hidden bg-gray-100 dark:bg-gray-800 aspect-[3/4]">
-          <img src="https://placehold.co/600x800/f0f2f5/6f8fae?text=Gamis+Shirred" alt="Gamis Shirred" class="product-img w-full h-full object-cover">
-        </div>
-        <div class="p-2 md:p-5">
-          <h3 class="font-semibold text-xs md:text-lg text-gray-800 dark:text-white mb-0.5 md:mb-1">Gamis Shirred Modern</h3>
-          <p class="text-[10px] md:text-sm text-gray-500 dark:text-gray-400 mb-1 md:mb-3 hidden md:block">Model shirred dengan detail cantik, bahan katun premium</p>
-          <span class="text-sm md:text-xl font-bold text-gray-900 dark:text-white block mb-1 md:mb-3">Rp 399.000</span>
-          <div class="block md:hidden">
-            <p class="text-[8px] text-gray-400 mb-1">beli di:</p>
+          
+          <div class="hidden md:block">
+            <p class="text-[10px] text-gray-400 mb-1.5">beli di:</p>
             <div class="flex gap-2">
-              <a href="#" class="flex-1 bg-[#ee4d2d] hover:bg-[#d43f21] text-white py-1.5 rounded-lg text-xs font-medium transition flex items-center justify-center gap-1 hover:scale-105">
-                <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm0 13c-2.33 0-4.31-1.46-5.11-3.5h10.22c-.8 2.04-2.78 3.5-5.11 3.5z"/>
-                </svg>
+              <a href="https://id.shp.ee/VxZ3LBak" target="_blank" class="shopee-link flex-1 bg-[#ee4d2d] hover:bg-[#d43f21] text-white px-3 py-1.5 rounded-lg text-xs font-medium transition flex items-center justify-center gap-1 hover:scale-105">
+                <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm0 13c-2.33 0-4.31-1.46-5.11-3.5h10.22c-.8 2.04-2.78 3.5-5.11 3.5z"/></svg>
                 Shopee
               </a>
-              <a href="#" class="flex-1 bg-[#010101] hover:bg-gray-900 text-white py-1.5 rounded-lg text-xs font-medium transition flex items-center justify-center gap-1 hover:scale-105">
-                <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 1.1.2V9.05a6.27 6.27 0 0 0-1.1-.1 6.33 6.33 0 0 0-6.32 6.33 6.33 6.33 0 0 0 9.46 5.46 6.33 6.33 0 0 0 2.97-5.46V7.88a7.63 7.63 0 0 0 4.5 1.44V5.85a4.83 4.83 0 0 1-2.4.84z"/>
-                </svg>
+              <a href="https://vt.tokopedia.com/t/ZS9LmTSMaVgKU-OP3pJ/" target="_blank" class="tiktok-link flex-1 bg-[#010101] hover:bg-gray-800 text-white px-3 py-1.5 rounded-lg text-xs font-medium transition flex items-center justify-center gap-1 hover:scale-105">
+                <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 1.1.2V9.05a6.27 6.27 0 0 0-1.1-.1 6.33 6.33 0 0 0-6.32 6.33 6.33 6.33 0 0 0 9.46 5.46 6.33 6.33 0 0 0 2.97-5.46V7.88a7.63 7.63 0 0 0 4.5 1.44V5.85a4.83 4.83 0 0 1-2.4.84z"/></svg>
                 TikTok
+              </a>
+              <a href="https://wa.me/6281563331110" target="_blank" class="whatsapp-link flex-1 bg-earth-brown hover:bg-taupe text-white px-3 py-1.5 rounded-lg text-xs font-medium transition flex items-center justify-center gap-1 hover:scale-105">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                WA
               </a>
             </div>
           </div>
-          <div class="hidden md:flex justify-between items-center">
-            <a href="https://wa.me/6281234567890?text=Halo%20WLS%20Fashion%2C%20saya%20mau%20beli%20Gamis%20Shirred" target="_blank" class="bg-accent-green hover:bg-accent-green/80 text-white px-4 py-2 rounded-lg text-sm font-medium transition hover:scale-105">Beli</a>
-          </div>
         </div>
       </div>
-      <!-- Product 3 -->
-      <div class="product-card bg-white dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-800 overflow-hidden shadow-sm shine-effect">
+
+      <!-- Product 2 - WLS | NADIRA ABAYA -->
+      <div class="product-card bg-white dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-800 overflow-hidden shadow-sm shine-effect" data-product-id="2">
         <div class="overflow-hidden bg-gray-100 dark:bg-gray-800 aspect-[3/4]">
-          <img src="https://placehold.co/600x800/e6e9ef/4a674a?text=Khimar+Set" alt="Khimar Set" class="product-img w-full h-full object-cover">
+          <img id="product2Image" src="/assets/abaya-nadira/nadira-abu.png" alt="WLS NADIRA ABAYA" class="product-img w-full h-full object-cover">
         </div>
         <div class="p-2 md:p-5">
-          <h3 class="font-semibold text-xs md:text-lg text-gray-800 dark:text-white mb-0.5 md:mb-1">Khimar Instan Set</h3>
-          <p class="text-[10px] md:text-sm text-gray-500 dark:text-gray-400 mb-1 md:mb-3 hidden md:block">Set khimar dengan bawahan, praktis dan syar'i</p>
-          <span class="text-sm md:text-xl font-bold text-gray-900 dark:text-white block mb-1 md:mb-3">Rp 279.000</span>
+          <h3 class="font-semibold text-xs md:text-lg text-gray-800 dark:text-white mb-0.5 md:mb-1">WLS | NADIRA ABAYA</h3>
+          <p class="text-[10px] md:text-sm text-gray-500 dark:text-gray-400 mb-1 md:mb-3 hidden md:block">Abaya premium dengan desain elegan dan modern, bahan nyaman untuk aktivitas sehari-hari</p>
+          
+          <div class="mb-1 md:mb-2">
+            <span class="text-xs text-gray-400 line-through">Rp 270.000</span>
+            <span class="text-sm md:text-xl font-bold text-earth-brown dark:text-accent-warm block">Rp 258.500</span>
+          </div>
+          
+          <div class="flex gap-1.5 mb-2 md:mb-3">
+            <div class="color-dot w-4 h-4 rounded-full border border-gray-300 cursor-pointer" style="background-color: #9e9e9e;" data-img="/assets/abaya-nadira/nadira-abu.png" title="Abu-abu"></div>
+            <div class="color-dot w-4 h-4 rounded-full border border-gray-300 cursor-pointer" style="background-color: #1a1a1a;" data-img="/assets/abaya-nadira/nadira-hitam.png" title="Hitam"></div>
+            <div class="color-dot w-4 h-4 rounded-full border border-gray-300 cursor-pointer" style="background-color: #ffffff;" data-img="/assets/abaya-nadira/nadira-putih.png" title="Putih"></div>
+            <div class="color-dot w-4 h-4 rounded-full border border-gray-300 cursor-pointer" style="background-color: #4b5320;" data-img="/assets/abaya-nadira/nadira-army.png" title="Army"></div>
+            <div class="color-dot w-4 h-4 rounded-full border border-gray-300 cursor-pointer" style="background-color: #c8a2c8;" data-img="/assets/abaya-nadira/nadira-lilac.png" title="Lilac"></div>
+            <div class="color-dot w-4 h-4 rounded-full border border-gray-300 cursor-pointer" style="background-color: #a0522d;" data-img="/assets/abaya-nadira/nadira-moca.png" title="Moca"></div>
+            <div class="color-dot w-4 h-4 rounded-full border border-gray-300 cursor-pointer" style="background-color: #556b2f;" data-img="/assets/abaya-nadira/nadira-olive.png" title="Olive"></div>
+          </div>
+          
           <div class="block md:hidden">
             <p class="text-[8px] text-gray-400 mb-1">beli di:</p>
-            <div class="flex gap-2">
-              <a href="#" class="flex-1 bg-[#ee4d2d] hover:bg-[#d43f21] text-white py-1.5 rounded-lg text-xs font-medium transition flex items-center justify-center gap-1 hover:scale-105">
-                <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm0 13c-2.33 0-4.31-1.46-5.11-3.5h10.22c-.8 2.04-2.78 3.5-5.11 3.5z"/>
-                </svg>
+            <div class="flex flex-col gap-1.5">
+              <a href="https://id.shp.ee/GKRi1CcC" target="_blank" class="shopee-link w-full bg-[#ee4d2d] hover:bg-[#d43f21] text-white py-1.5 rounded-lg text-xs font-medium transition flex items-center justify-center gap-1 hover:scale-105">
+                <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm0 13c-2.33 0-4.31-1.46-5.11-3.5h10.22c-.8 2.04-2.78 3.5-5.11 3.5z"/></svg>
                 Shopee
               </a>
-              <a href="#" class="flex-1 bg-[#010101] hover:bg-gray-900 text-white py-1.5 rounded-lg text-xs font-medium transition flex items-center justify-center gap-1 hover:scale-105">
-                <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 1.1.2V9.05a6.27 6.27 0 0 0-1.1-.1 6.33 6.33 0 0 0-6.32 6.33 6.33 6.33 0 0 0 9.46 5.46 6.33 6.33 0 0 0 2.97-5.46V7.88a7.63 7.63 0 0 0 4.5 1.44V5.85a4.83 4.83 0 0 1-2.4.84z"/>
-                </svg>
+              <a href="https://vt.tokopedia.com/t/ZS9LuY4r3egaQ-MGukk/" target="_blank" class="tiktok-link w-full bg-[#010101] hover:bg-gray-800 text-white py-1.5 rounded-lg text-xs font-medium transition flex items-center justify-center gap-1 hover:scale-105">
+                <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 1.1.2V9.05a6.27 6.27 0 0 0-1.1-.1 6.33 6.33 0 0 0-6.32 6.33 6.33 6.33 0 0 0 9.46 5.46 6.33 6.33 0 0 0 2.97-5.46V7.88a7.63 7.63 0 0 0 4.5 1.44V5.85a4.83 4.83 0 0 1-2.4.84z"/></svg>
                 TikTok
+              </a>
+              <a href="https://wa.me/6281563331110" target="_blank" class="whatsapp-link w-full bg-earth-brown hover:bg-taupe text-white py-1.5 rounded-lg text-xs font-medium transition flex items-center justify-center gap-1 hover:scale-105">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                WhatsApp
               </a>
             </div>
           </div>
-          <div class="hidden md:flex justify-between items-center">
-            <a href="https://wa.me/6281234567890?text=Halo%20WLS%20Fashion%2C%20saya%20mau%20beli%20Khimar%20Set" target="_blank" class="bg-accent-green hover:bg-accent-green/80 text-white px-4 py-2 rounded-lg text-sm font-medium transition hover:scale-105">Beli</a>
+          
+          <div class="hidden md:block">
+            <p class="text-[10px] text-gray-400 mb-1.5">beli di:</p>
+            <div class="flex gap-2">
+              <a href="https://id.shp.ee/GKRi1CcC" target="_blank" class="shopee-link flex-1 bg-[#ee4d2d] hover:bg-[#d43f21] text-white px-3 py-1.5 rounded-lg text-xs font-medium transition flex items-center justify-center gap-1 hover:scale-105">
+                <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm0 13c-2.33 0-4.31-1.46-5.11-3.5h10.22c-.8 2.04-2.78 3.5-5.11 3.5z"/></svg>
+                Shopee
+              </a>
+              <a href="https://vt.tokopedia.com/t/ZS9LuY4r3egaQ-MGukk/" target="_blank" class="tiktok-link flex-1 bg-[#010101] hover:bg-gray-800 text-white px-3 py-1.5 rounded-lg text-xs font-medium transition flex items-center justify-center gap-1 hover:scale-105">
+                <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 1.1.2V9.05a6.27 6.27 0 0 0-1.1-.1 6.33 6.33 0 0 0-6.32 6.33 6.33 6.33 0 0 0 9.46 5.46 6.33 6.33 0 0 0 2.97-5.46V7.88a7.63 7.63 0 0 0 4.5 1.44V5.85a4.83 4.83 0 0 1-2.4.84z"/></svg>
+                TikTok
+              </a>
+              <a href="https://wa.me/6281563331110" target="_blank" class="whatsapp-link flex-1 bg-earth-brown hover:bg-taupe text-white px-3 py-1.5 rounded-lg text-xs font-medium transition flex items-center justify-center gap-1 hover:scale-105">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                WA
+              </a>
+            </div>
           </div>
         </div>
       </div>
-      <!-- Card "Lihat Katalog" - Tambahan ke-4 -->
-      <a href="catalog.html" class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-accent-green/10 to-accent-blue/10 dark:from-accent-green/5 dark:to-accent-blue/5 border-2 border-accent-green/30 dark:border-accent-green/20 hover:border-accent-green transition-all duration-300 flex items-center justify-center min-h-[280px] md:min-h-[400px]">
+
+      <!-- Product 3 - WLS | Abaya Gamis Malaysia -->
+      <div class="product-card bg-white dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-800 overflow-hidden shadow-sm shine-effect" data-product-id="3">
+        <div class="overflow-hidden bg-gray-100 dark:bg-gray-800 aspect-[3/4]">
+          <img id="product3Image" src="/assets/abaya-malay/malay-abu.png" alt="WLS Abaya Gamis Malaysia" class="product-img w-full h-full object-cover">
+        </div>
+        <div class="p-2 md:p-5">
+          <h3 class="font-semibold text-xs md:text-lg text-gray-800 dark:text-white mb-0.5 md:mb-1">WLS | Abaya Gamis Malaysia</h3>
+          <p class="text-[10px] md:text-sm text-gray-500 dark:text-gray-400 mb-1 md:mb-3 hidden md:block">Abaya model Malaysia dengan desain modern dan elegan, bahan nyaman dan adem</p>
+          
+          <div class="mb-1 md:mb-2">
+            <span class="text-xs text-gray-400 line-through">Rp 285.000</span>
+            <span class="text-sm md:text-xl font-bold text-earth-brown dark:text-accent-warm block">Rp 132.000</span>
+          </div>
+          
+          <div class="flex gap-1.5 mb-2 md:mb-3">
+            <div class="color-dot w-4 h-4 rounded-full border border-gray-300 cursor-pointer" style="background-color: #9e9e9e;" data-img="/assets/abaya-malay/malay-abu.png" title="Abu-abu"></div>
+            <div class="color-dot w-4 h-4 rounded-full border border-gray-300 cursor-pointer" style="background-color: #1a1a1a;" data-img="/assets/abaya-malay/malay-hitam.png" title="Hitam"></div>
+            <div class="color-dot w-4 h-4 rounded-full border border-gray-300 cursor-pointer" style="background-color: #ffffff;" data-img="/assets/abaya-malay/malay-putih.png" title="Putih"></div>
+            <div class="color-dot w-4 h-4 rounded-full border border-gray-300 cursor-pointer" style="background-color: #4b5320;" data-img="/assets/abaya-malay/malay-army.png" title="Army"></div>
+            <div class="color-dot w-4 h-4 rounded-full border border-gray-300 cursor-pointer" style="background-color: #c8a2c8;" data-img="/assets/abaya-malay/malay-lilac.png" title="Lilac"></div>
+            <div class="color-dot w-4 h-4 rounded-full border border-gray-300 cursor-pointer" style="background-color: #a0522d;" data-img="/assets/abaya-malay/malay-moca.png" title="Moca"></div>
+            <div class="color-dot w-4 h-4 rounded-full border border-gray-300 cursor-pointer" style="background-color: #556b2f;" data-img="/assets/abaya-malay/malay-olive.png" title="Olive"></div>
+          </div>
+          
+          <div class="block md:hidden">
+            <p class="text-[8px] text-gray-400 mb-1">beli di:</p>
+            <div class="flex flex-col gap-1.5">
+              <a href="https://id.shp.ee/YdRFXS6c" target="_blank" class="shopee-link w-full bg-[#ee4d2d] hover:bg-[#d43f21] text-white py-1.5 rounded-lg text-xs font-medium transition flex items-center justify-center gap-1 hover:scale-105">
+                <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm0 13c-2.33 0-4.31-1.46-5.11-3.5h10.22c-.8 2.04-2.78 3.5-5.11 3.5z"/></svg>
+                Shopee
+              </a>
+              <a href="https://vt.tokopedia.com/t/ZS9LCJkSLtTGf-i4wVo/" target="_blank" class="tiktok-link w-full bg-[#010101] hover:bg-gray-800 text-white py-1.5 rounded-lg text-xs font-medium transition flex items-center justify-center gap-1 hover:scale-105">
+                <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 1.1.2V9.05a6.27 6.27 0 0 0-1.1-.1 6.33 6.33 0 0 0-6.32 6.33 6.33 6.33 0 0 0 9.46 5.46 6.33 6.33 0 0 0 2.97-5.46V7.88a7.63 7.63 0 0 0 4.5 1.44V5.85a4.83 4.83 0 0 1-2.4.84z"/></svg>
+                TikTok
+              </a>
+              <a href="https://wa.me/6281563331110" target="_blank" class="whatsapp-link w-full bg-earth-brown hover:bg-taupe text-white py-1.5 rounded-lg text-xs font-medium transition flex items-center justify-center gap-1 hover:scale-105">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                WhatsApp
+              </a>
+            </div>
+          </div>
+          
+          <div class="hidden md:block">
+            <p class="text-[10px] text-gray-400 mb-1.5">beli di:</p>
+            <div class="flex gap-2">
+              <a href="https://id.shp.ee/YdRFXS6c" target="_blank" class="shopee-link flex-1 bg-[#ee4d2d] hover:bg-[#d43f21] text-white px-3 py-1.5 rounded-lg text-xs font-medium transition flex items-center justify-center gap-1 hover:scale-105">
+                <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm0 13c-2.33 0-4.31-1.46-5.11-3.5h10.22c-.8 2.04-2.78 3.5-5.11 3.5z"/></svg>
+                Shopee
+              </a>
+              <a href="https://vt.tokopedia.com/t/ZS9LCJkSLtTGf-i4wVo/" target="_blank" class="tiktok-link flex-1 bg-[#010101] hover:bg-gray-800 text-white px-3 py-1.5 rounded-lg text-xs font-medium transition flex items-center justify-center gap-1 hover:scale-105">
+                <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 1.1.2V9.05a6.27 6.27 0 0 0-1.1-.1 6.33 6.33 0 0 0-6.32 6.33 6.33 6.33 0 0 0 9.46 5.46 6.33 6.33 0 0 0 2.97-5.46V7.88a7.63 7.63 0 0 0 4.5 1.44V5.85a4.83 4.83 0 0 1-2.4.84z"/></svg>
+                TikTok
+              </a>
+              <a href="https://wa.me/6281563331110" target="_blank" class="whatsapp-link flex-1 bg-earth-brown hover:bg-taupe text-white px-3 py-1.5 rounded-lg text-xs font-medium transition flex items-center justify-center gap-1 hover:scale-105">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                WA
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card "Lihat Katalog" - Desktop: di tengah, Mobile: tetap di akhir -->
+      <a href="catalog.html" class="group relative overflow-hidden rounded-xl bg-gradient-to-br from-earth-brown/10 to-sage/10 dark:from-earth-brown/5 dark:to-sage/5 border-2 border-earth-brown/30 dark:border-accent-warm/20 hover:border-earth-brown transition-all duration-300 flex items-center justify-center min-h-[280px] md:min-h-[400px] lg:col-start-2">
         <div class="text-center p-6">
-          <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-accent-green/20 dark:bg-accent-green/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-            <svg class="w-8 h-8 text-accent-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-earth-brown/20 dark:bg-accent-warm/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+            <svg class="w-8 h-8 text-earth-brown dark:text-accent-warm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16M9 6v12m6-12v12"></path>
             </svg>
           </div>
           <h3 class="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-2">Lihat Semua Koleksi</h3>
           <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Temukan lebih banyak pilihan busana syar'i terbaik</p>
-          <span class="inline-flex items-center gap-2 text-accent-green font-semibold group-hover:gap-3 transition-all">
+          <span class="inline-flex items-center gap-2 text-earth-brown dark:text-accent-warm font-semibold group-hover:gap-3 transition-all">
             Kunjungi Katalog
             <svg class="w-4 h-4 group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
           </span>
         </div>
-        <div class="absolute inset-0 bg-gradient-to-r from-accent-green/0 via-accent-green/5 to-accent-green/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-earth-brown/0 via-earth-brown/5 to-earth-brown/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
       </a>
     </div>
   </section>
 
-  <!-- CTA SECTION dengan animasi pulse -->
+  <!-- CTA SECTION -->
   <section class="py-12 md:py-20 px-5 sm:px-8 max-w-7xl mx-auto">
     <div class="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-900/50 dark:to-gray-800/50 rounded-2xl p-6 md:p-12 text-center border border-gray-100 dark:border-gray-800 relative overflow-hidden">
-      <div class="absolute inset-0 bg-gradient-to-r from-accent-green/5 to-accent-blue/5 animate-pulse-slow"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-earth-brown/5 to-sage/5 animate-pulse-slow"></div>
       <div class="relative z-10">
         <div class="inline-flex items-center justify-center gap-2 mb-3 md:mb-4">
-          <svg class="w-6 h-6 md:w-8 md:h-8 text-accent-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-6 h-6 md:w-8 md:h-8 text-earth-brown dark:text-accent-warm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
           </svg>
           <h2 class="text-xl md:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white">Siap Tampil Elegan dengan WLS Fashion?</h2>
         </div>
         <p class="text-xs md:text-base text-gray-600 dark:text-gray-300 mb-4 md:mb-8 max-w-2xl mx-auto">Dapatkan koleksi terbaru kami sekarang juga. Konsultasi gratis via WhatsApp</p>
-        <a href="https://wa.me/6281234567890?text=Halo%20WLS%20Fashion%2C%20saya%20tertarik%20dengan%20koleksi%20Anda" target="_blank" class="inline-flex items-center gap-2 bg-accent-green hover:bg-accent-green/80 text-white px-4 md:px-8 py-2 md:py-3 rounded-full font-medium text-sm md:text-base transition-all hover:scale-105 pulse-animation">
+        <a href="https://wa.me/6281234567890?text=Halo%20WLS%20Fashion%2C%20saya%20tertarik%20dengan%20koleksi%20Anda" target="_blank" class="inline-flex items-center gap-2 bg-earth-brown hover:bg-taupe text-white px-4 md:px-8 py-2 md:py-3 rounded-full font-medium text-sm md:text-base transition-all hover:scale-105 pulse-animation">
           <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
           </svg>
@@ -516,60 +724,63 @@
     <div class="max-w-7xl mx-auto px-5 sm:px-8">
       <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
         <div class="col-span-2 md:col-span-1">
-          <h3 class="font-bold text-lg md:text-xl tracking-tight">
-            <span class="text-gray-900 dark:text-white">WLS</span>
-            <span class="text-accent-green dark:text-accent-green"> Fashion</span>
-          </h3>
-          <p class="text-xs md:text-sm text-gray-500 dark:text-gray-400 mt-2 md:mt-3 leading-relaxed">Menginspirasi muslimah modern dengan busana syar'i yang elegan dan nyaman.</p>
+          <div class="flex items-center gap-2 mb-2">
+            <div class="w-8 h-8 rounded-full bg-earth-brown/10 dark:bg-accent-warm/20 flex items-center justify-center">
+              <svg class="w-5 h-5 text-earth-brown dark:text-accent-warm" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75 0 5.385 4.365 9.75 9.75 9.75 5.385 0 9.75-4.365 9.75-9.75 0-5.385-4.365-9.75-9.75-9.75zM12 6.75c1.5 0 2.25 1.5 2.25 2.25s-.75 2.25-2.25 2.25-2.25-1.5-2.25-2.25.75-2.25 2.25-2.25zM12 19.5c-2.25 0-4.125-1.125-5.25-2.625 1.125-1.5 3-2.625 5.25-2.625s4.125 1.125 5.25 2.625c-1.125 1.5-3 2.625-5.25 2.625z" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-lg md:text-xl tracking-tight text-gray-900 dark:text-white">WLS Fashion</h3>
+              <p class="text-[10px] text-earth-brown dark:text-accent-warm">Comfortable & Grounded</p>
+            </div>
+          </div>
+          <p class="text-xs md:text-sm text-gray-500 dark:text-gray-400 mt-2 leading-relaxed">Menginspirasi muslimah modern dengan busana syar'i yang elegan dan nyaman.</p>
         </div>
         <div>
           <h4 class="font-semibold text-sm md:text-base text-gray-900 dark:text-white mb-2 md:mb-3">Menu</h4>
           <ul class="space-y-1 md:space-y-2 text-xs md:text-sm">
-            <li><a href="index.html" class="text-gray-600 dark:text-gray-400 hover:text-accent-green transition">Beranda</a></li>
-            <li><a href="about.html" class="text-gray-600 dark:text-gray-400 hover:text-accent-green transition">Tentang Kami</a></li>
-            <li><a href="catalog.html" class="text-gray-600 dark:text-gray-400 hover:text-accent-green transition">Katalog</a></li>
-            <li><a href="contact.html" class="text-gray-600 dark:text-gray-400 hover:text-accent-green transition">Kontak</a></li>
+            <li><a href="index.html" class="text-gray-600 dark:text-gray-400 hover:text-earth-brown dark:hover:text-accent-warm transition">Beranda</a></li>
+            <li><a href="about.html" class="text-gray-600 dark:text-gray-400 hover:text-earth-brown dark:hover:text-accent-warm transition">Tentang Kami</a></li>
+            <li><a href="catalog.html" class="text-gray-600 dark:text-gray-400 hover:text-earth-brown dark:hover:text-accent-warm transition">Katalog</a></li>
+            <li><a href="contact.html" class="text-gray-600 dark:text-gray-400 hover:text-earth-brown dark:hover:text-accent-warm transition">Kontak</a></li>
           </ul>
         </div>
         <div>
           <h4 class="font-semibold text-sm md:text-base text-gray-900 dark:text-white mb-2 md:mb-3">Belanja</h4>
           <ul class="space-y-1 md:space-y-2 text-xs md:text-sm">
-            <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-accent-green transition">Cara Pemesanan</a></li>
-            <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-accent-green transition">Panduan Ukuran</a></li>
-            <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-accent-green transition">Pengiriman</a></li>
+            <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-earth-brown dark:hover:text-accent-warm transition">Cara Pemesanan</a></li>
+            <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-earth-brown dark:hover:text-accent-warm transition">Panduan Ukuran</a></li>
+            <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-earth-brown dark:hover:text-accent-warm transition">Pengiriman</a></li>
           </ul>
         </div>
         <div>
           <h4 class="font-semibold text-sm md:text-base text-gray-900 dark:text-white mb-2 md:mb-3">Ikuti Kami</h4>
           <div class="flex space-x-3 md:space-x-4 mb-3 md:mb-4">
-            <a href="#" class="text-gray-500 hover:text-accent-green transition hover:scale-110">
+            <a href="#" class="text-gray-500 hover:text-earth-brown dark:hover:text-accent-warm transition hover:scale-110">
               <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10a2 2 0 012-2h14a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2v-9z M21 7l-9-4-9 4" /></svg>
             </a>
-            <a href="#" class="text-gray-500 hover:text-accent-green transition hover:scale-110">
+            <a href="#" class="text-gray-500 hover:text-earth-brown dark:hover:text-accent-warm transition hover:scale-110">
               <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75 0 4.306 2.785 7.96 6.646 9.258.486.09.664-.21.664-.466 0-.23-.009-.84-.014-1.65-2.703.587-3.274-1.303-3.274-1.303-.442-1.123-1.08-1.422-1.08-1.422-.883-.603.067-.591.067-.591.976.069 1.49 1.003 1.49 1.003.868 1.487 2.278 1.058 2.833.81.088-.63.34-1.058.618-1.301-2.16-.246-4.43-1.08-4.43-4.805 0-1.061.379-1.93 1-2.61-.1-.245-.434-1.234.095-2.57 0 0 .816-.261 2.67.996a9.27 9.27 0 012.43-.327c.825.004 1.656.112 2.43.327 1.854-1.257 2.67-.996 2.67-.996.528 1.336.195 2.325.095 2.57.621.68 1 1.549 1 2.61 0 3.735-2.274 4.557-4.44 4.798.35.3.664.894.664 1.802 0 1.302-.012 2.352-.012 2.672 0 .26.174.562.67.466 3.857-1.3 6.637-4.952 6.637-9.258 0-5.385-4.365-9.75-9.75-9.75z" /></svg>
             </a>
-            <a href="#" class="text-gray-500 hover:text-accent-green transition hover:scale-110">
+            <a href="#" class="text-gray-500 hover:text-earth-brown dark:hover:text-accent-warm transition hover:scale-110">
               <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" /></svg>
             </a>
           </div>
           <div class="flex gap-2 md:gap-3">
-            <a href="#" class="inline-flex items-center gap-1 md:gap-2 bg-[#ee4d2d] hover:bg-[#d43f21] text-white px-2 md:px-4 py-1 md:py-2 rounded-lg text-[10px] md:text-sm font-medium transition hover:scale-105">
-              <svg class="w-3 h-3 md:w-4 md:h-4" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm0 13c-2.33 0-4.31-1.46-5.11-3.5h10.22c-.8 2.04-2.78 3.5-5.11 3.5z"/>
-              </svg>
+            <a href="https://shopee.co.id/wls.official" target="_blank" class="inline-flex items-center gap-1 md:gap-2 bg-[#ee4d2d] hover:bg-[#d43f21] text-white px-2 md:px-4 py-1 md:py-2 rounded-lg text-[10px] md:text-sm font-medium transition hover:scale-105">
+              <svg class="w-3 h-3 md:w-4 md:h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm0 13c-2.33 0-4.31-1.46-5.11-3.5h10.22c-.8 2.04-2.78 3.5-5.11 3.5z"/></svg>
               Shopee
             </a>
-            <a href="#" class="inline-flex items-center gap-1 md:gap-2 bg-[#010101] hover:bg-gray-800 text-white px-2 md:px-4 py-1 md:py-2 rounded-lg text-[10px] md:text-sm font-medium transition hover:scale-105">
-              <svg class="w-3 h-3 md:w-4 md:h-4" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 1.1.2V9.05a6.27 6.27 0 0 0-1.1-.1 6.33 6.33 0 0 0-6.32 6.33 6.33 6.33 0 0 0 9.46 5.46 6.33 6.33 0 0 0 2.97-5.46V7.88a7.63 7.63 0 0 0 4.5 1.44V5.85a4.83 4.83 0 0 1-2.4.84z"/>
-              </svg>
+            <a href="https://www.tiktok.com/@wls.fashion" target="_blank" class="inline-flex items-center gap-1 md:gap-2 bg-[#010101] hover:bg-gray-800 text-white px-2 md:px-4 py-1 md:py-2 rounded-lg text-[10px] md:text-sm font-medium transition hover:scale-105">
+              <svg class="w-3 h-3 md:w-4 md:h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 1.1.2V9.05a6.27 6.27 0 0 0-1.1-.1 6.33 6.33 0 0 0-6.32 6.33 6.33 6.33 0 0 0 9.46 5.46 6.33 6.33 0 0 0 2.97-5.46V7.88a7.63 7.63 0 0 0 4.5 1.44V5.85a4.83 4.83 0 0 1-2.4.84z"/></svg>
               TikTok
             </a>
           </div>
         </div>
       </div>
       <div class="text-center text-[10px] md:text-xs text-gray-400 pt-6 md:pt-8 mt-6 md:mt-8 border-t border-gray-100 dark:border-gray-800">
-        © 2025 WLS Fashion | Modest Muslimah Fashion. All rights reserved.
+        © 2025 WLS Fashion | Comfortable & Grounded. All rights reserved.
       </div>
     </div>
   </footer>
@@ -619,6 +830,218 @@
         mobilePanel.classList.toggle('hidden'); 
       });
     }
+    
+    // Data Produk (3 produk)
+    const products = {
+      1: {
+        id: 1,
+        name: "Abaya Madina Arabic",
+        category: "Abaya",
+        originalPrice: "Rp 180.000 - Rp 240.000",
+        price: "Rp 80.316 - Rp 144.000",
+        image: "/assets/abaya-arabic/abaya-madina-abu.jpeg",
+        description: "Abaya premium dengan bahan syakila yang lembut, flowy, dan nyaman dipakai sehari-hari. Desain simpel namun elegan, cocok untuk berbagai aktivitas. Busui friendly dengan bahan yang adem dan tidak panas.",
+        specs: [
+          "Bahan: Syakila Premium",
+          "Ukuran: All Size (LD 110cm, Panjang 140cm)",
+          "Warna: Abu-abu, Hitam, Putih, Army, Lilac, Moca, Olive",
+          "Detail: Kantong samping, lengan panjang",
+          "Care Instruction: Cuci tangan dengan air dingin"
+        ],
+        variants: [
+          { name: "Abu-abu", colorCode: "#9e9e9e", image: "/assets/abaya-arabic/abaya-madina-abu.jpeg" },
+          { name: "Hitam", colorCode: "#1a1a1a", image: "/assets/abaya-arabic/abaya-madina-hitam.jpeg" },
+          { name: "Putih", colorCode: "#ffffff", image: "/assets/abaya-arabic/abaya-madina-putih.jpeg" },
+          { name: "Army", colorCode: "#4b5320", image: "/assets/abaya-arabic/abaya-madina-army.jpeg" },
+          { name: "Lilac", colorCode: "#c8a2c8", image: "/assets/abaya-arabic/abaya-madina-lilac.jpeg" },
+          { name: "Moca", colorCode: "#a0522d", image: "/assets/abaya-arabic/abaya-madina-moca.jpeg" },
+          { name: "Olive", colorCode: "#556b2f", image: "/assets/abaya-arabic/abaya-madina-olive.jpeg" }
+        ],
+        shopeeLink: "https://id.shp.ee/VxZ3LBak",
+        tiktokLink: "https://vt.tokopedia.com/t/ZS9LmTSMaVgKU-OP3pJ/",
+        whatsappLink: "https://wa.me/6281563331110"
+      },
+      2: {
+        id: 2,
+        name: "WLS | NADIRA ABAYA",
+        category: "Abaya",
+        originalPrice: "Rp 270.000",
+        price: "Rp 258.500",
+        image: "/assets/abaya-nadira/nadira-abu.png",
+        description: "Abaya premium dengan desain elegan dan modern. Bahan nyaman untuk aktivitas sehari-hari. Tersedia dalam berbagai pilihan warna yang menarik.",
+        specs: [
+          "Bahan: Premium Quality",
+          "Ukuran: All Size (LD 112cm, Panjang 142cm)",
+          "Warna: Abu-abu, Hitam, Putih, Army, Lilac, Moca, Olive",
+          "Detail: Desain modern, lengan panjang",
+          "Care Instruction: Cuci tangan dengan air dingin"
+        ],
+        variants: [
+          { name: "Abu-abu", colorCode: "#9e9e9e", image: "/assets/abaya-nadira/nadira-abu.png" },
+          { name: "Hitam", colorCode: "#1a1a1a", image: "/assets/abaya-nadira/nadira-hitam.png" },
+          { name: "Putih", colorCode: "#ffffff", image: "/assets/abaya-nadira/nadira-putih.png" },
+          { name: "Army", colorCode: "#4b5320", image: "/assets/abaya-nadira/nadira-army.png" },
+          { name: "Lilac", colorCode: "#c8a2c8", image: "/assets/abaya-nadira/nadira-lilac.png" },
+          { name: "Moca", colorCode: "#a0522d", image: "/assets/abaya-nadira/nadira-moca.png" },
+          { name: "Olive", colorCode: "#556b2f", image: "/assets/abaya-nadira/nadira-olive.png" }
+        ],
+        shopeeLink: "https://id.shp.ee/GKRi1CcC",
+        tiktokLink: "https://vt.tokopedia.com/t/ZS9LuY4r3egaQ-MGukk/",
+        whatsappLink: "https://wa.me/6281563331110"
+      },
+      3: {
+        id: 3,
+        name: "WLS | Abaya Gamis Malaysia",
+        category: "Abaya",
+        originalPrice: "Rp 285.000",
+        price: "Rp 132.000",
+        image: "/assets/abaya-malay/malay-abu.png",
+        description: "Abaya model Malaysia dengan desain modern dan elegan. Bahan nyaman dan adem, cocok untuk daily wear maupun acara formal.",
+        specs: [
+          "Bahan: Premium Quality",
+          "Ukuran: All Size (LD 110cm, Panjang 140cm)",
+          "Warna: Abu-abu, Hitam, Putih, Army, Lilac, Moca, Olive",
+          "Detail: Model Malaysia, lengan panjang",
+          "Care Instruction: Cuci tangan dengan air dingin"
+        ],
+        variants: [
+          { name: "Abu-abu", colorCode: "#9e9e9e", image: "/assets/abaya-malay/malay-abu.png" },
+          { name: "Hitam", colorCode: "#1a1a1a", image: "/assets/abaya-malay/malay-hitam.png" },
+          { name: "Putih", colorCode: "#ffffff", image: "/assets/abaya-malay/malay-putih.png" },
+          { name: "Army", colorCode: "#4b5320", image: "/assets/abaya-malay/malay-army.png" },
+          { name: "Lilac", colorCode: "#c8a2c8", image: "/assets/abaya-malay/malay-lilac.png" },
+          { name: "Moca", colorCode: "#a0522d", image: "/assets/abaya-malay/malay-moca.png" },
+          { name: "Olive", colorCode: "#556b2f", image: "/assets/abaya-malay/malay-olive.png" }
+        ],
+        shopeeLink: "https://id.shp.ee/YdRFXS6c",
+        tiktokLink: "https://vt.tokopedia.com/t/ZS9LCJkSLtTGf-i4wVo/",
+        whatsappLink: "https://wa.me/6281563331110"
+      }
+    };
+    
+    // Modal elements
+    const modal = document.getElementById('productModal');
+    const closeModalBtn = document.getElementById('closeModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalThumbnails = document.getElementById('modalThumbnails');
+    let currentProduct = null;
+    let currentVariantIndex = 0;
+    
+    // Function to open modal with product data
+    function openModal(productId) {
+      const product = products[productId];
+      if (!product) return;
+      
+      currentProduct = product;
+      currentVariantIndex = 0;
+      
+      // Fill modal with product data
+      modalImage.src = product.variants[0].image;
+      document.getElementById('modalCategory').textContent = product.category;
+      document.getElementById('modalTitle').textContent = product.name;
+      document.getElementById('modalDescription').textContent = product.description;
+      document.getElementById('modalOriginalPrice').textContent = product.originalPrice;
+      document.getElementById('modalPrice').textContent = product.price;
+      
+      // Fill specifications
+      const specsList = document.getElementById('modalSpecs');
+      specsList.innerHTML = product.specs.map(spec => `<li class="flex items-start gap-2"><svg class="w-3 h-3 text-earth-brown mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>${spec}</li>`).join('');
+      
+      // Fill thumbnails
+      modalThumbnails.innerHTML = product.variants.map((variant, index) => `
+        <div class="w-12 h-12 rounded-lg overflow-hidden border-2 ${index === 0 ? 'border-accent-warm' : 'border-gray-200 dark:border-gray-700'} cursor-pointer hover:scale-105 transition" data-variant-index="${index}">
+          <img src="${variant.image}" alt="${variant.name}" class="w-full h-full object-cover">
+        </div>
+      `).join('');
+      
+      // Add click event to thumbnails
+      document.querySelectorAll('#modalThumbnails > div').forEach(thumb => {
+        thumb.addEventListener('click', () => {
+          const index = parseInt(thumb.getAttribute('data-variant-index'));
+          currentVariantIndex = index;
+          modalImage.src = product.variants[index].image;
+          
+          // Update active state
+          document.querySelectorAll('#modalThumbnails > div').forEach((t, i) => {
+            if (i === index) {
+              t.classList.add('border-accent-warm');
+              t.classList.remove('border-gray-200', 'dark:border-gray-700');
+            } else {
+              t.classList.remove('border-accent-warm');
+              t.classList.add('border-gray-200', 'dark:border-gray-700');
+            }
+          });
+        });
+      });
+      
+      // Set links
+      document.getElementById('modalShopeeLink').href = product.shopeeLink;
+      document.getElementById('modalTiktokLink').href = product.tiktokLink;
+      document.getElementById('modalWhatsappLink').href = product.whatsappLink;
+      
+      // Show modal with animation
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+    }
+    
+    // Close modal function
+    function closeModal() {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.style.overflow = '';
+    }
+    
+    // Add click event to product cards
+    document.querySelectorAll('.product-card').forEach(card => {
+      card.addEventListener('click', (e) => {
+        // Don't open modal if clicking on buttons or color dots
+        if (e.target.closest('.shopee-link') || 
+            e.target.closest('.tiktok-link') || 
+            e.target.closest('.whatsapp-link') ||
+            e.target.closest('.color-dot')) {
+          e.stopPropagation();
+          return;
+        }
+        
+        const productId = card.getAttribute('data-product-id');
+        if (productId) {
+          openModal(productId);
+        }
+      });
+    });
+    
+    // Color dot click handler to change product image on card
+    document.querySelectorAll('.color-dot').forEach(dot => {
+      dot.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const newImgSrc = dot.getAttribute('data-img');
+        const productCard = dot.closest('.product-card');
+        const productImg = productCard.querySelector('.product-img');
+        if (productImg && newImgSrc) {
+          productImg.src = newImgSrc;
+        }
+      });
+    });
+    
+    // Close modal on button click
+    if (closeModalBtn) {
+      closeModalBtn.addEventListener('click', closeModal);
+    }
+    
+    // Close modal on overlay click
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+    
+    // Close modal on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal && !modal.classList.contains('hidden')) {
+        closeModal();
+      }
+    });
   </script>
 </body>
 </html>
